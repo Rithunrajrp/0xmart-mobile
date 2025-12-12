@@ -1,33 +1,46 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
-
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useCartStore } from '../../store/cart-store';
+import { CustomTabBar } from '../../components/navigation/CustomTabBar';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { getItemCount } = useCartStore();
+  const cartCount = getItemCount();
 
   return (
     <Tabs
+      tabBar={(props) => <CustomTabBar {...props} />}
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="collection"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Collection',
+        }}
+      />
+      <Tabs.Screen
+        name="exclusive"
+        options={{
+          title: 'Exclusive',
+        }}
+      />
+      <Tabs.Screen
+        name="reward"
+        options={{
+          title: 'Reward',
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Account',
         }}
       />
     </Tabs>

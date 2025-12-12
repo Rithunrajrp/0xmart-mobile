@@ -1,25 +1,41 @@
 {
   "expo": {
-    "name": "0xmart-mobile",
+    "name": "0xMart",
     "slug": "0xmart-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "0xmartmobile",
-    "userInterfaceStyle": "automatic",
+    "scheme": "oxmartmobile",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0a0a0a"
+    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.oxmart.mobile",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "0xMart needs access to your location to provide accurate shipping addresses",
+        "NSCameraUsageDescription": "0xMart needs access to your camera to scan QR codes for wallet addresses"
+      }
     },
     "android": {
+      "package": "com.oxmart.mobile",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#0a0a0a",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "CAMERA"
+      ]
     },
     "web": {
       "output": "static",
@@ -33,16 +49,28 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff",
+          "backgroundColor": "#0a0a0a",
           "dark": {
-            "backgroundColor": "#000000"
+            "backgroundColor": "#0a0a0a"
           }
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow 0xMart to use your location for accurate shipping addresses."
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "apiUrl": "http://172.20.10.2:8000/api/v1",
+      "eas": {
+        "projectId": "your-project-id"
+      }
     }
   }
 }
