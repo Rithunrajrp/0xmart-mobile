@@ -1,11 +1,11 @@
 import React from "react";
 import {
-  View,
-  TextInput,
-  Text,
-  TextInputProps,
-  ViewStyle,
-  TextStyle,
+    Text,
+    TextInput,
+    TextInputProps,
+    TextStyle,
+    View,
+    ViewStyle,
 } from "react-native";
 
 interface InputProps extends TextInputProps {
@@ -36,8 +36,9 @@ export const Input: React.FC<InputProps> = ({
             {
               fontSize: 14,
               fontWeight: "500",
-              color: "#ffffff",
+              color: "#111827", // Charcoal Black
               marginBottom: 8,
+              fontFamily: 'Inter-Medium',
             },
             labelStyle,
           ]}
@@ -50,9 +51,9 @@ export const Input: React.FC<InputProps> = ({
           flexDirection: "row",
           alignItems: "center",
           borderWidth: 1,
-          borderColor: error ? "#ef4444" : "#2a2a2a",
+          borderColor: error ? "#ef4444" : "#E5E7EB", // Light Gray
           borderRadius: 12,
-          backgroundColor: "#1a1a1a",
+          backgroundColor: "#FFFFFF", // White
           paddingHorizontal: 12,
         }}
       >
@@ -63,11 +64,12 @@ export const Input: React.FC<InputProps> = ({
               flex: 1,
               paddingVertical: 12,
               fontSize: 16,
-              color: "#ffffff",
+              color: "#111827", // Charcoal Black
+              fontFamily: 'Inter-Regular',
             },
             inputStyle,
           ]}
-          placeholderTextColor="#6a6a6a"
+          placeholderTextColor="#9CA3AF" // Muted Gray
           {...props}
         />
         {rightIcon && <View style={{ marginLeft: 8 }}>{rightIcon}</View>}

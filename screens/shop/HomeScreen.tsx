@@ -3,15 +3,15 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  ActivityIndicator,
-  Dimensions,
-  Image,
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    ActivityIndicator,
+    Dimensions,
+    Image,
+    RefreshControl,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import api from "../../api";
@@ -24,6 +24,7 @@ const CARD_WIDTH = (width - 48) / 2; // 2 columns with padding
 
 export default function HomeScreen() {
   const router = useRouter();
+  // @ts-ignore
   const { getItemCount, selectedStablecoin } = useCartStore();
   const { toggleFavorite, isFavorite } = useFavoritesStore();
 
@@ -48,7 +49,7 @@ export default function HomeScreen() {
     }
   };
   const handleCategoryPress = (category: string) => {
-    router.push(`/category/${encodeURIComponent(category)}`);
+    router.push(`/collection/${encodeURIComponent(category)}` as any);
   };
 
   const loadCategories = async () => {
@@ -105,6 +106,21 @@ export default function HomeScreen() {
     return `${price.stablecoinType} ${parseFloat(
       price.price.toString()
     ).toFixed(2)}`;
+  };
+
+  const getCategoryIcon = (category: string): keyof typeof Ionicons.glyphMap => {
+    const lowerCat = category.toLowerCase();
+    if (lowerCat.includes('electronic') || lowerCat.includes('tech')) return 'hardware-chip-outline';
+    if (lowerCat.includes('cloth') || lowerCat.includes('fashion') || lowerCat.includes('wear')) return 'shirt-outline';
+    if (lowerCat.includes('home') || lowerCat.includes('living')) return 'home-outline';
+    if (lowerCat.includes('beauty') || lowerCat.includes('health')) return 'sparkles-outline';
+    if (lowerCat.includes('sport') || lowerCat.includes('fitness')) return 'basketball-outline';
+    if (lowerCat.includes('toy') || lowerCat.includes('game')) return 'game-controller-outline';
+    if (lowerCat.includes('book') || lowerCat.includes('read')) return 'book-outline';
+    if (lowerCat.includes('watch') || lowerCat.includes('jewel')) return 'watch-outline';
+    if (lowerCat.includes('bag') || lowerCat.includes('luggage')) return 'briefcase-outline';
+    if (lowerCat.includes('shoe') || lowerCat.includes('footwear')) return 'footsteps-outline';
+    return 'grid-outline';
   };
 
   const renderProductCard = (product: Product, index: number) => (
@@ -184,7 +200,7 @@ export default function HomeScreen() {
     if (categories.length === 0) return null;
 
     return (
-      <View style={styles.section}>
+      <View style={[styles.section, styles.categoriesSection]}>
         <Text style={styles.sectionTitle}>Shop by Category</Text>
         <View style={styles.categoriesGrid}>
           {categories.map((category) => (
@@ -194,7 +210,7 @@ export default function HomeScreen() {
               onPress={() => handleCategoryPress(category)}
             >
               <View style={styles.categoryIcon}>
-                <Ionicons name="grid-outline" size={24} color="#8b5cf6" />
+                <Ionicons name={getCategoryIcon(category)} size={24} color="#111827" />
               </View>
               <Text style={styles.categoryName} numberOfLines={2}>
                 {category}
@@ -210,7 +226,7 @@ export default function HomeScreen() {
     return (
       <SafeAreaView style={styles.container} edges={["top"]}>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#8b5cf6" />
+          <ActivityIndicator size="large" color="#111827" />
         </View>
       </SafeAreaView>
     );
@@ -228,7 +244,7 @@ export default function HomeScreen() {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={handleRefresh}
-            tintColor="#8b5cf6"
+            tintColor="#111827"
           />
         }
       >
@@ -242,7 +258,7 @@ export default function HomeScreen() {
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>All Products</Text>
-            <TouchableOpacity onPress={() => router.push("/products")}>
+            <TouchableOpacity onPress={() => router.push("/search")}>
               <Text style={styles.seeAllText}>See All</Text>
             </TouchableOpacity>
           </View>
@@ -260,93 +276,72 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: "#1e1e1e",
-  },
-  logo: {
-    width: 100,
-    height: 30,
-  },
-  cartButton: {
-    position: "relative",
-  },
-  cartBadge: {
-    position: "absolute",
-    top: -8,
-    right: -8,
-    backgroundColor: "#ef4444",
-    borderRadius: 10,
-    minWidth: 20,
-    height: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 4,
-  },
-  cartBadgeText: {
-    color: "#ffffff",
-    fontSize: 11,
-    fontWeight: "bold",
+    backgroundColor: "#FFFFFF", // White
   },
   content: {
     flex: 1,
   },
   section: {
-    paddingVertical: 20,
+    paddingVertical: 16, // Reduced from 24
+  },
+  categoriesSection: {
+    marginBottom: 24, // Added extra spacing after categories
   },
   sectionHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 16,
-    marginBottom: 12,
+    marginBottom: 16,
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#ffffff",
+    fontSize: 24,
+    fontWeight: "700",
+    color: "#111827", // Charcoal Black
     paddingHorizontal: 16,
+    fontFamily: 'PlayfairDisplay-Bold', // Luxury Heading
   },
   seeAllText: {
     fontSize: 14,
-    color: "#8b5cf6",
-    fontWeight: "600",
+    color: "#4B5563", // Gray
+    fontWeight: "500",
+    fontFamily: 'Inter-Medium',
   },
   featuredScroll: {
     paddingLeft: 16,
   },
   featuredCard: {
     width: 280,
-    marginRight: 12,
-    backgroundColor: "#1e1e1e",
+    marginRight: 16,
+    backgroundColor: "#FFFFFF",
     borderRadius: 12,
-    overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08, // Soft shadow
+    shadowRadius: 12,
+    elevation: 4,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
   },
   featuredImage: {
     width: "100%",
     height: 180,
-    backgroundColor: "#2a2a2a",
+    backgroundColor: "#F3F4F6",
   },
   featuredInfo: {
-    padding: 12,
+    padding: 16,
   },
   featuredName: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
     marginBottom: 4,
+    fontFamily: 'Inter-SemiBold',
   },
   featuredPrice: {
     fontSize: 16,
-    fontWeight: "bold",
-    color: "#8b5cf6",
+    fontWeight: "700",
+    color: "#111827",
   },
   categoriesGrid: {
     flexDirection: "row",
@@ -358,21 +353,24 @@ const styles = StyleSheet.create({
   categoryCard: {
     width: (width - 48) / 4,
     alignItems: "center",
-    marginBottom: 8,
+    marginBottom: 12,
   },
   categoryIcon: {
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F9FAFB", // Very light gray
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 8,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
   },
   categoryName: {
     fontSize: 12,
-    color: "#ffffff",
+    color: "#4B5563",
     textAlign: "center",
+    fontFamily: 'Inter-Medium',
   },
   productsGrid: {
     flexDirection: "row",
@@ -382,10 +380,16 @@ const styles = StyleSheet.create({
   },
   productCard: {
     width: CARD_WIDTH,
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#FFFFFF",
     borderRadius: 12,
-    marginBottom: 16,
-    overflow: "hidden",
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 4,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
   },
   productCardLeft: {
     marginRight: 12,
@@ -395,19 +399,24 @@ const styles = StyleSheet.create({
   },
   productImage: {
     width: "100%",
-    height: 160,
-    backgroundColor: "#2a2a2a",
+    height: 180, // Taller images
+    backgroundColor: "#F3F4F6",
   },
   favoriteButton: {
     position: "absolute",
     top: 8,
     right: 8,
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    backgroundColor: "#FFFFFF",
     borderRadius: 20,
     width: 36,
     height: 36,
     justifyContent: "center",
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   productInfo: {
     padding: 12,
@@ -415,23 +424,26 @@ const styles = StyleSheet.create({
   productName: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
     marginBottom: 4,
     height: 40,
+    fontFamily: 'Inter-Medium',
   },
   productPrice: {
     fontSize: 15,
-    fontWeight: "bold",
-    color: "#8b5cf6",
+    fontWeight: "700",
+    color: "#111827",
   },
   lowStockText: {
     fontSize: 11,
-    color: "#ef4444",
+    color: "#D4AF37", // Gold for urgency/accent? Or Red? Sticking to Gold/Red
     marginTop: 4,
+    fontWeight: "500",
   },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#FFFFFF",
   },
 });

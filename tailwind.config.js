@@ -9,70 +9,66 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Dark theme colors based on design
         background: {
-          DEFAULT: "#0a0a0a",
-          secondary: "#121212",
-          tertiary: "#1a1a1a",
-        },
-        card: {
-          DEFAULT: "#1a1a1a",
-          secondary: "#1e1e1e",
-          hover: "#222222",
-        },
-        border: {
-          DEFAULT: "#2a2a2a",
-          light: "#333333",
-        },
-        text: {
-          primary: "#ffffff",
-          secondary: "#a0a0a0",
-          tertiary: "#6a6a6a",
-          muted: "#4a4a4a",
+          DEFAULT: "#FFFFFF", // White
+          secondary: "#F3F4F6", // Off-white/Neutral
         },
         primary: {
-          DEFAULT: "#8b5cf6",
-          50: "#faf5ff",
-          100: "#f3e8ff",
-          200: "#e9d5ff",
-          300: "#d8b4fe",
-          400: "#c084fc",
-          500: "#a855f7",
-          600: "#9333ea",
-          700: "#7e22ce",
-          800: "#6b21a8",
-          900: "#581c87",
+          DEFAULT: "#111827", // Charcoal Black
+          foreground: "#FFFFFF",
+          50: "#f9fafb",
+          100: "#f3f4f6",
+          200: "#e5e7eb",
+          300: "#d1d5db",
+          400: "#9ca3af",
+          500: "#6b7280",
+          600: "#4b5563",
+          700: "#374151",
+          800: "#1f2937",
+          900: "#111827",
         },
         accent: {
-          blue: "#3b82f6",
-          purple: "#8b5cf6",
-          pink: "#ec4899",
-          green: "#10b981",
+          DEFAULT: "#D4AF37", // Gold
+          foreground: "#FFFFFF",
         },
+        text: {
+          primary: "#111827", // Charcoal Black
+          secondary: "#4B5563", // Gray
+          muted: "#9CA3AF", // Light Gray
+          inverted: "#FFFFFF",
+        },
+        border: {
+          DEFAULT: "#E5E7EB",
+          light: "#F3F4F6",
+        },
+        card: {
+          DEFAULT: "#FFFFFF",
+          hover: "#F9FAFB",
+        },
+        // Keeping status colors but aligning them
         success: {
-          DEFAULT: "#22c55e",
-          light: "#4ade80",
-          dark: "#16a34a",
+          DEFAULT: "#10B981",
+          light: "#34D399",
         },
         danger: {
-          DEFAULT: "#ef4444",
-          light: "#f87171",
-          dark: "#dc2626",
+          DEFAULT: "#EF4444",
+          light: "#F87171",
         },
         warning: {
-          DEFAULT: "#f59e0b",
-          light: "#fbbf24",
-          dark: "#d97706",
+          DEFAULT: "#F59E0B",
+          light: "#FBBF24",
         },
         info: {
-          DEFAULT: "#3b82f6",
-          light: "#60a5fa",
-          dark: "#2563eb",
+          DEFAULT: "#3B82F6",
+          light: "#60A5FA",
         },
       },
       fontFamily: {
-        sans: ["System"],
-        mono: ["Courier"],
+        serif: ["Playfair Display", "serif"],
+        sans: ["Inter", "sans-serif"],
+      },
+      boxShadow: {
+        'soft': '0 4px 12px rgba(0,0,0,0.08)',
       },
     },
   },

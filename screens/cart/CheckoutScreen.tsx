@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
-import { useRouter } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { Card } from "../../components/ui/Card";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import {
+    Alert,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import api from "../../api";
 import { Button } from "../../components/ui/Button";
+import { Card } from "../../components/ui/Card";
 import { useCartStore } from "../../store/cart-store";
 import { useUserStore } from "../../store/user-store";
 import { UserAddress } from "../../types";
-import api from "../../api";
 
 export default function CheckoutScreen() {
   const router = useRouter();
@@ -139,7 +139,7 @@ export default function CheckoutScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#ffffff" />
+          <Ionicons name="arrow-back" size={24} color="#111827" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Checkout</Text>
         <View style={{ width: 24 }} />
@@ -158,7 +158,7 @@ export default function CheckoutScreen() {
           {selectedAddress ? (
             <View style={styles.addressBox}>
               <View style={styles.addressHeader}>
-                <Ionicons name="location" size={20} color="#8b5cf6" />
+                <Ionicons name="location" size={20} color="#111827" />
                 <Text style={styles.addressName}>{selectedAddress.fullName}</Text>
               </View>
               <Text style={styles.addressText}>{selectedAddress.addressLine1}</Text>
@@ -172,7 +172,7 @@ export default function CheckoutScreen() {
               </Text>
               <Text style={styles.addressText}>{selectedAddress.country}</Text>
               <View style={styles.phoneRow}>
-                <Ionicons name="call" size={16} color="#a0a0a0" />
+                <Ionicons name="call" size={16} color="#6B7280" />
                 <Text style={styles.phoneText}>{selectedAddress.phone}</Text>
               </View>
             </View>
@@ -219,7 +219,7 @@ export default function CheckoutScreen() {
           <Text style={styles.sectionTitle}>Payment Method</Text>
           <View style={styles.paymentBox}>
             <View style={styles.walletIcon}>
-              <Ionicons name="wallet" size={24} color="#8b5cf6" />
+              <Ionicons name="wallet" size={24} color="#111827" />
             </View>
             <View style={styles.walletInfo}>
               <Text style={styles.walletName}>{selectedStablecoin} Wallet</Text>
@@ -228,15 +228,15 @@ export default function CheckoutScreen() {
               </Text>
             </View>
             {hasEnoughBalance ? (
-              <Ionicons name="checkmark-circle" size={24} color="#22c55e" />
+              <Ionicons name="checkmark-circle" size={24} color="#059669" />
             ) : (
-              <Ionicons name="alert-circle" size={24} color="#ef4444" />
+              <Ionicons name="alert-circle" size={24} color="#DC2626" />
             )}
           </View>
 
           {!hasEnoughBalance && (
             <View style={styles.insufficientBox}>
-              <Ionicons name="warning" size={16} color="#ef4444" />
+              <Ionicons name="warning" size={16} color="#DC2626" />
               <Text style={styles.insufficientText}>
                 Insufficient balance. Please add funds.
               </Text>
@@ -299,21 +299,21 @@ export default function CheckoutScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#FFFFFF", // White
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     padding: 16,
-    backgroundColor: "#121212",
-    borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    backgroundColor: "#FFFFFF",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#E5E7EB",
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
     flex: 1,
     textAlign: "center",
   },
@@ -323,6 +323,15 @@ const styles = StyleSheet.create({
   section: {
     margin: 16,
     marginBottom: 0,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    padding: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
   },
   sectionHeader: {
     flexDirection: "row",
@@ -333,20 +342,21 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
     marginBottom: 16,
+    fontFamily: 'PlayfairDisplay-Bold',
   },
   changeText: {
     fontSize: 14,
-    color: "#8b5cf6",
+    color: "#111827", // Charcoal or Blue/Gold
     fontWeight: "600",
   },
   addressBox: {
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#F9FAFB", // Light Gray
     padding: 16,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#E5E7EB",
   },
   addressHeader: {
     flexDirection: "row",
@@ -357,11 +367,11 @@ const styles = StyleSheet.create({
   addressName: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
   },
   addressText: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
     marginBottom: 4,
   },
   phoneRow: {
@@ -372,7 +382,7 @@ const styles = StyleSheet.create({
   },
   phoneText: {
     fontSize: 14,
-    color: "#ffffff",
+    color: "#111827",
   },
   noAddress: {
     alignItems: "center",
@@ -380,11 +390,12 @@ const styles = StyleSheet.create({
   },
   noAddressText: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
     marginBottom: 12,
   },
   addAddressButton: {
     marginTop: 8,
+    backgroundColor: "#111827",
   },
   orderItem: {
     flexDirection: "row",
@@ -392,7 +403,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    borderBottomColor: "#F3F4F6",
   },
   itemInfo: {
     flex: 1,
@@ -401,32 +412,32 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
     marginBottom: 4,
   },
   itemQuantity: {
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#6B7280",
   },
   itemPrice: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
   },
   paymentBox: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#F9FAFB", // Light Gray
     padding: 16,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#E5E7EB",
   },
   walletIcon: {
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: "#2a2a2a",
+    backgroundColor: "#F3F4F6", // Lighter Gray
     alignItems: "center",
     justifyContent: "center",
     marginRight: 12,
@@ -437,28 +448,28 @@ const styles = StyleSheet.create({
   walletName: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
     marginBottom: 4,
   },
   walletBalance: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
   },
   insufficientBox: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    backgroundColor: "#2a1a1a",
+    backgroundColor: "#FEF2F2", // Red 50
     padding: 12,
     borderRadius: 8,
     marginTop: 12,
     borderWidth: 1,
-    borderColor: "#ef4444",
+    borderColor: "#EF4444",
   },
   insufficientText: {
     flex: 1,
     fontSize: 12,
-    color: "#ef4444",
+    color: "#DC2626", // Red 600
   },
   summaryRow: {
     flexDirection: "row",
@@ -467,36 +478,36 @@ const styles = StyleSheet.create({
   },
   summaryLabel: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
   },
   summaryValue: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
   },
   freeText: {
-    color: "#22c55e",
+    color: "#059669", // Green 600
   },
   totalRow: {
     marginTop: 12,
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: "#2a2a2a",
+    borderTopColor: "#E5E7EB",
   },
   totalLabel: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
   },
   totalValue: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#8b5cf6",
+    color: "#111827", // Charcoal
     textAlign: "right",
   },
   totalCurrency: {
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#6B7280",
     textAlign: "right",
   },
   bottomBar: {
@@ -504,20 +515,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     padding: 16,
-    backgroundColor: "#121212",
+    backgroundColor: "#FFFFFF",
     borderTopWidth: 1,
-    borderTopColor: "#2a2a2a",
+    borderTopColor: "#E5E7EB",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 4,
   },
   bottomLabel: {
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#6B7280",
   },
   bottomTotal: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
   },
   placeOrderButton: {
     paddingHorizontal: 24,
+    backgroundColor: "#111827",
   },
 });

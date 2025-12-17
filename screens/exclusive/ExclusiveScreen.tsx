@@ -1,34 +1,35 @@
-import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import React from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { TopBar } from "../../components/navigation/TopBar";
-import { Card } from "../../components/ui/Card";
 
 export default function ExclusiveScreen() {
   return (
     <SafeAreaView style={styles.container} edges={["top"]}>
       <TopBar />
-      <ScrollView style={styles.content}>
+      <ScrollView style={styles.content} contentContainerStyle={styles.scrollContent}>
         <View style={styles.centerContent}>
           <View style={styles.iconContainer}>
-            <Ionicons name="diamond" size={64} color="#8b5cf6" />
+            <Ionicons name="diamond-outline" size={56} color="#111827" />
           </View>
-          <Text style={styles.title}>Exclusive</Text>
+          <Text style={styles.title}>Exclusive Access</Text>
           <Text style={styles.subtitle}>
-            Premium products for members only
+            Premium collection requires membership
           </Text>
 
-          <Card style={styles.card}>
-            <Ionicons name="lock-closed" size={48} color="#6a6a6a" />
+          <View style={styles.card}>
+            <View style={styles.lockIconContainer}>
+              <Ionicons name="lock-closed-outline" size={32} color="#D4AF37" />
+            </View>
             <Text style={styles.cardTitle}>Members Only</Text>
             <Text style={styles.cardText}>
-              This section is exclusively available for premium members. Stay tuned for exciting offers!
+              This section is exclusively available for premium members. Join now to unlock special prices and early access.
             </Text>
             <View style={styles.badge}>
               <Text style={styles.badgeText}>COMING SOON</Text>
             </View>
-          </Card>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -38,69 +39,94 @@ export default function ExclusiveScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#FFFFFF",
   },
   content: {
     flex: 1,
   },
-  centerContent: {
-    flex: 1,
-    alignItems: "center",
+  scrollContent: {
+    flexGrow: 1,
     justifyContent: "center",
-    paddingVertical: 60,
-    paddingHorizontal: 24,
+  },
+  centerContent: {
+    alignItems: "center",
+    padding: 32,
   },
   iconContainer: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: "#1a1a1a",
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: "#F9FAFB",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 24,
-    borderWidth: 2,
-    borderColor: "#8b5cf6",
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
   },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: "700",
-    color: "#ffffff",
-    marginBottom: 8,
+    color: "#111827",
+    marginBottom: 12,
+    fontFamily: 'PlayfairDisplay-Bold',
+    textAlign: "center",
   },
   subtitle: {
     fontSize: 16,
-    color: "#a0a0a0",
+    color: "#6B7280",
     textAlign: "center",
-    marginBottom: 32,
+    marginBottom: 40,
+    fontFamily: 'Inter-Regular',
   },
   card: {
     width: "100%",
     alignItems: "center",
-    paddingVertical: 32,
+    padding: 32,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 16,
+    elevation: 4,
+  },
+  lockIconContainer: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: "#FFFBEB", // Light yellow/gold
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
   },
   cardTitle: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#ffffff",
-    marginTop: 16,
-    marginBottom: 8,
+    color: "#111827",
+    marginBottom: 12,
+    fontFamily: 'PlayfairDisplay-Bold',
   },
   cardText: {
-    fontSize: 14,
-    color: "#a0a0a0",
+    fontSize: 15,
+    color: "#6B7280",
     textAlign: "center",
-    marginBottom: 24,
-    lineHeight: 20,
+    marginBottom: 28,
+    lineHeight: 24,
+    fontFamily: 'Inter-Regular',
   },
   badge: {
-    backgroundColor: "#8b5cf6",
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    backgroundColor: "#111827",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     borderRadius: 20,
   },
   badgeText: {
     fontSize: 12,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#FFFFFF",
+    letterSpacing: 1,
+    fontFamily: 'Inter-Bold',
   },
 });

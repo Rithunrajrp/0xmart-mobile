@@ -1,11 +1,11 @@
 import React from "react";
 import {
-  TouchableOpacity,
-  Text,
-  ActivityIndicator,
-  TouchableOpacityProps,
-  ViewStyle,
-  TextStyle,
+    ActivityIndicator,
+    Text,
+    TextStyle,
+    TouchableOpacity,
+    TouchableOpacityProps,
+    ViewStyle,
 } from "react-native";
 
 interface ButtonProps extends TouchableOpacityProps {
@@ -46,19 +46,19 @@ export const Button: React.FC<ButtonProps> = ({
       case "primary":
         return {
           ...baseStyles,
-          backgroundColor: "#8b5cf6",
+          backgroundColor: "#111827", // Charcoal Black
         };
       case "secondary":
         return {
           ...baseStyles,
-          backgroundColor: "#1e1e1e",
+          backgroundColor: "#F3F4F6", // Neutral
         };
       case "outline":
         return {
           ...baseStyles,
           backgroundColor: "transparent",
           borderWidth: 1,
-          borderColor: "#2a2a2a",
+          borderColor: "#E5E7EB", // Light Gray
         };
       case "danger":
         return {
@@ -99,9 +99,11 @@ export const Button: React.FC<ButtonProps> = ({
 
   const getTextVariantStyles = (): TextStyle => {
     switch (variant) {
+      case "secondary":
+        return { color: "#111827" }; // Charcoal
       case "outline":
       case "ghost":
-        return { color: "#a0a0a0" };
+        return { color: "#4B5563" }; // Gray 600
       default:
         return { color: "#ffffff" };
     }
@@ -147,7 +149,7 @@ export const Button: React.FC<ButtonProps> = ({
             style={[
               getTextVariantStyles(),
               getTextSizeStyles(),
-              icon && { marginLeft: 8 },
+              icon ? { marginLeft: 8 } : undefined,
               textStyle,
             ]}
           >

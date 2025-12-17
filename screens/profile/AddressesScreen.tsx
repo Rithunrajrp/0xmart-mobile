@@ -1,22 +1,21 @@
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
-  ActivityIndicator,
+    Alert,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
 } from "react-native";
-import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { Card } from "../../components/ui/Card";
 import { Button } from "../../components/ui/Button";
+import { Card } from "../../components/ui/Card";
 import { Input } from "../../components/ui/Input";
-import { useUserStore } from "../../store/user-store";
 import { useAuthStore } from "../../store/auth-store";
-import { UserAddress, AddressType } from "../../types";
+import { useUserStore } from "../../store/user-store";
+import { AddressType, UserAddress } from "../../types";
 import { locationService } from "../../utils/location";
 
 export default function AddressesScreen() {
@@ -87,14 +86,14 @@ export default function AddressesScreen() {
       <SafeAreaView style={styles.container} edges={["top"]}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={24} color="#0a0a0a" />
+            <Ionicons name="arrow-back" size={24} color="#111827" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Addresses</Text>
           <View style={{ width: 24 }} />
         </View>
 
         <View style={styles.emptyContainer}>
-          <Ionicons name="location-outline" size={80} color="#d5d5d5" />
+          <Ionicons name="location-outline" size={80} color="#9CA3AF" />
           <Text style={styles.emptyTitle}>Login to manage addresses</Text>
           <Button
             title="Login"
@@ -111,7 +110,7 @@ export default function AddressesScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#ffffff" />
+          <Ionicons name="arrow-back" size={24} color="#111827" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>My Addresses</Text>
         <TouchableOpacity onPress={handleAddNew}>
@@ -122,7 +121,7 @@ export default function AddressesScreen() {
       <ScrollView style={styles.content}>
         {addresses.length === 0 ? (
           <View style={styles.emptyAddresses}>
-            <Ionicons name="location-outline" size={64} color="#6a6a6a" />
+            <Ionicons name="location-outline" size={64} color="#D1D5DB" />
             <Text style={styles.emptyAddressesTitle}>No addresses yet</Text>
             <Text style={styles.emptyAddressesSubtitle}>
               Add your shipping and billing addresses
@@ -157,7 +156,7 @@ export default function AddressesScreen() {
 
                   {address.isDefault && (
                     <View style={styles.defaultBadge}>
-                      <Ionicons name="star" size={14} color="#404040" />
+                      <Ionicons name="star" size={14} color="#ffffff" />
                       <Text style={styles.defaultText}>Default</Text>
                     </View>
                   )}
@@ -177,7 +176,7 @@ export default function AddressesScreen() {
                   <Text style={styles.addressLine}>{address.country}</Text>
 
                   <View style={styles.phoneRow}>
-                    <Ionicons name="call" size={16} color="#6a6a6a" />
+                    <Ionicons name="call" size={16} color="#6B7280" />
                     <Text style={styles.phone}>{address.phone}</Text>
                   </View>
                 </View>
@@ -227,7 +226,7 @@ export default function AddressesScreen() {
             onPress={handleAddNew}
             variant="outline"
             style={styles.addNewButton}
-            icon={<Ionicons name="add" size={20} color="#0f0f0f" />}
+            icon={<Ionicons name="add" size={20} color="#111827" />}
           />
         )}
 
@@ -277,6 +276,7 @@ function AddressModal({
     state: address?.state || "",
     postalCode: address?.postalCode || "",
     country: address?.country || "",
+    isDefault: address?.isDefault || false,
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -352,7 +352,7 @@ function AddressModal({
             {address ? "Edit Address" : "Add Address"}
           </Text>
           <TouchableOpacity onPress={onClose}>
-            <Ionicons name="close" size={24} color="#ffffff" />
+            <Ionicons name="close" size={24} color="#111827" />
           </TouchableOpacity>
         </View>
 
@@ -488,21 +488,21 @@ function AddressModal({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#FFFFFF",
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     padding: 16,
-    backgroundColor: "#121212",
-    borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    backgroundColor: "#FFFFFF",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#F3F4F6",
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     flex: 1,
     textAlign: "center",
   },
@@ -515,6 +515,10 @@ const styles = StyleSheet.create({
   },
   addressCard: {
     marginBottom: 0,
+    backgroundColor: "#FFFFFF",
+    borderColor: "#F3F4F6",
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
   },
   addressHeader: {
     flexDirection: "row",
@@ -531,7 +535,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     textTransform: "uppercase",
-    color: "#ffffff",
+    color: "#111827",
   },
   defaultBadge: {
     flexDirection: "row",
@@ -551,17 +555,17 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingBottom: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    borderBottomColor: "#F3F4F6",
   },
   fullName: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     marginBottom: 8,
   },
   addressLine: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#4B5563",
     marginBottom: 4,
   },
   phoneRow: {
@@ -572,7 +576,7 @@ const styles = StyleSheet.create({
   },
   phone: {
     fontSize: 14,
-    color: "#ffffff",
+    color: "#111827",
     fontWeight: "500",
   },
   addressActions: {
@@ -588,23 +592,24 @@ const styles = StyleSheet.create({
   },
   actionDivider: {
     width: 1,
-    backgroundColor: "#2a2a2a",
+    backgroundColor: "#E5E7EB",
   },
   actionBtnText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#4B5563",
   },
   emptyContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     padding: 32,
+    backgroundColor: "#FFFFFF",
   },
   emptyTitle: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     marginTop: 24,
   },
   actionButton: {
@@ -617,12 +622,12 @@ const styles = StyleSheet.create({
   emptyAddressesTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     marginTop: 16,
   },
   emptyAddressesSubtitle: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
     marginTop: 8,
     textAlign: "center",
   },
@@ -643,7 +648,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   modalContent: {
-    backgroundColor: "#121212",
+    backgroundColor: "#FFFFFF",
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     maxHeight: "90%",
@@ -654,12 +659,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    borderBottomColor: "#F3F4F6",
   },
   modalTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
   },
   modalBody: {
     padding: 20,
@@ -670,7 +675,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
     marginBottom: 8,
   },
   typeButtons: {
@@ -683,9 +688,9 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#E5E7EB",
     alignItems: "center",
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#F9FAFB",
   },
   typeButtonActive: {
     backgroundColor: "#8b5cf6",
@@ -694,7 +699,7 @@ const styles = StyleSheet.create({
   typeButtonText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#a0a0a0",
+    color: "#6B7280",
   },
   typeButtonTextActive: {
     color: "#ffffff",
@@ -703,7 +708,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 20,
     borderTopWidth: 1,
-    borderTopColor: "#2a2a2a",
+    borderTopColor: "#F3F4F6",
     gap: 12,
   },
   modalButton: {

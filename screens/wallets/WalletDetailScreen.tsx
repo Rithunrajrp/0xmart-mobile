@@ -1,23 +1,22 @@
+import { Ionicons } from "@expo/vector-icons";
+import * as Clipboard from "expo-clipboard";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  RefreshControl,
-  Alert,
+    Alert,
+    RefreshControl,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { useRouter, useLocalSearchParams } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { Card } from "../../components/ui/Card";
-import { Button } from "../../components/ui/Button";
-import { Wallet, Transaction } from "../../types";
-import { NETWORK_DISPLAY_NAMES } from "../../api";
-import api from "../../api";
-import * as Clipboard from "expo-clipboard";
 import QRCode from "react-native-qrcode-svg";
+import { SafeAreaView } from "react-native-safe-area-context";
+import api, { NETWORK_DISPLAY_NAMES } from "../../api";
+import { Button } from "../../components/ui/Button";
+import { Card } from "../../components/ui/Card";
+import { Transaction, Wallet } from "../../types";
 
 export default function WalletDetailScreen() {
   const router = useRouter();
@@ -128,7 +127,7 @@ export default function WalletDetailScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#ffffff" />
+          <Ionicons name="arrow-back" size={24} color="#111827" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>
           {wallet.stablecoinType} Wallet
@@ -257,7 +256,7 @@ export default function WalletDetailScreen() {
                                 ? "#22c55e"
                                 : tx.type === "WITHDRAWAL"
                                 ? "#ef4444"
-                                : "#ffffff",
+                                : "#111827",
                           },
                         ]}
                       >
@@ -296,21 +295,21 @@ export default function WalletDetailScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#FFFFFF", // White
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     padding: 16,
-    backgroundColor: "#121212",
-    borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    backgroundColor: "#FFFFFF",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#E5E7EB",
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
   },
   loadingContainer: {
     flex: 1,
@@ -319,7 +318,7 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 16,
-    color: "#ffffff",
+    color: "#6B7280", // Gray
   },
   emptyContainer: {
     flex: 1,
@@ -330,7 +329,7 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
     marginTop: 16,
   },
   content: {
@@ -339,21 +338,26 @@ const styles = StyleSheet.create({
   balanceCard: {
     margin: 16,
     paddingVertical: 24,
+    backgroundColor: "#111827", // Dark Card for Balance to pop
+    borderRadius: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 4,
   },
   networkBadge: {
     alignSelf: "flex-start",
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
     marginBottom: 16,
-    borderWidth: 1,
-    borderColor: "#2a2a2a",
+    marginLeft: 16,
   },
   networkText: {
     fontSize: 12,
     fontWeight: "600",
-    color: "#a0a0a0",
+    color: "#FFFFFF",
     textTransform: "uppercase",
   },
   balanceInfo: {
@@ -362,13 +366,13 @@ const styles = StyleSheet.create({
   },
   balanceLabel: {
     fontSize: 14,
-    color: "#6a6a6a",
+    color: "#9CA3AF", // Gray 400
     marginBottom: 8,
   },
   balanceValue: {
     fontSize: 32,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#FFFFFF", // White text on dark card
   },
   lockedInfo: {
     flexDirection: "row",
@@ -378,29 +382,39 @@ const styles = StyleSheet.create({
   },
   lockedText: {
     fontSize: 12,
-    color: "#6a6a6a",
+    color: "#9CA3AF",
   },
   qrCard: {
     marginHorizontal: 16,
     marginBottom: 16,
     alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    padding: 16,
   },
   qrLabel: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
     marginBottom: 16,
   },
   qrContainer: {
     padding: 16,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#FFFFFF",
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#E5E7EB",
   },
   addressCard: {
     marginHorizontal: 16,
     marginBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    padding: 16,
   },
   addressHeader: {
     flexDirection: "row",
@@ -411,7 +425,7 @@ const styles = StyleSheet.create({
   addressLabel: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
   },
   copyButton: {
     flexDirection: "row",
@@ -425,9 +439,13 @@ const styles = StyleSheet.create({
   },
   addressText: {
     fontSize: 12,
-    color: "#6a6a6a",
+    color: "#111827",
     fontFamily: "monospace",
     lineHeight: 18,
+    backgroundColor: "#F9FAFB",
+    padding: 8,
+    borderRadius: 6,
+    overflow: "hidden",
   },
   actionsContainer: {
     flexDirection: "row",
@@ -437,6 +455,7 @@ const styles = StyleSheet.create({
   },
   actionButton: {
     flex: 1,
+    backgroundColor: "#111827",
   },
   transactionsSection: {
     paddingHorizontal: 16,
@@ -444,21 +463,29 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     marginBottom: 12,
   },
   emptyTransactions: {
     alignItems: "center",
     paddingVertical: 48,
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#F9FAFB",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
   },
   emptyTransactionsText: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
     marginTop: 12,
   },
   transactionsList: {
     padding: 0,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    overflow: "hidden",
   },
   transactionItem: {
     flexDirection: "row",
@@ -468,7 +495,7 @@ const styles = StyleSheet.create({
   },
   transactionBorder: {
     borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    borderBottomColor: "#E5E7EB",
   },
   transactionLeft: {
     flexDirection: "row",
@@ -489,13 +516,13 @@ const styles = StyleSheet.create({
   transactionType: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
     marginBottom: 2,
     textTransform: "capitalize",
   },
   transactionDate: {
     fontSize: 12,
-    color: "#6a6a6a",
+    color: "#6B7280",
   },
   transactionRight: {
     alignItems: "flex-end",

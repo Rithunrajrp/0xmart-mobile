@@ -1,26 +1,26 @@
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React, { useEffect } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  RefreshControl,
-  ScrollView,
-  Alert,
-  TouchableOpacity,
-  Image,
+    Alert,
+    Image,
+    RefreshControl,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { Card } from "../../components/ui/Card";
 import { Button } from "../../components/ui/Button";
-import { useFavoritesStore } from "../../store/favorites-store";
-import { useCartStore } from "../../store/cart-store";
+import { Card } from "../../components/ui/Card";
 import { useAuthStore } from "../../store/auth-store";
+import { useCartStore } from "../../store/cart-store";
+import { useFavoritesStore } from "../../store/favorites-store";
 
 export default function FavoritesScreen() {
   const router = useRouter();
-  const { favorites, isLoading, fetchFavorites, removeFavorite, toggleFavorite } =
+  const { favorites, isLoading, fetchFavorites, toggleFavorite } =
     useFavoritesStore();
   const { selectedStablecoin } = useCartStore();
   const { isAuthenticated } = useAuthStore();
@@ -60,14 +60,14 @@ export default function FavoritesScreen() {
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={24} color="#ffffff" />
+            <Ionicons name="arrow-back" size={24} color="#111827" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Favorites</Text>
           <View style={{ width: 24 }} />
         </View>
 
         <View style={styles.emptyContainer}>
-          <Ionicons name="heart-outline" size={80} color="#4a4a4a" />
+          <Ionicons name="heart-outline" size={80} color="#9CA3AF" />
           <Text style={styles.emptyTitle}>Login to view favorites</Text>
           <Text style={styles.emptySubtitle}>
             Save your favorite products for easy access
@@ -89,14 +89,14 @@ export default function FavoritesScreen() {
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={24} color="#ffffff" />
+            <Ionicons name="arrow-back" size={24} color="#111827" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Favorites</Text>
           <View style={{ width: 24 }} />
         </View>
 
         <View style={styles.emptyContainer}>
-          <Ionicons name="heart-outline" size={80} color="#4a4a4a" />
+          <Ionicons name="heart-outline" size={80} color="#D1D5DB" />
           <Text style={styles.emptyTitle}>No favorites yet</Text>
           <Text style={styles.emptySubtitle}>
             Start adding products to your wishlist
@@ -117,7 +117,7 @@ export default function FavoritesScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#ffffff" />
+          <Ionicons name="arrow-back" size={24} color="#111827" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Favorites</Text>
         <View style={{ width: 24 }} />
@@ -201,21 +201,21 @@ export default function FavoritesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#FFFFFF",
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     padding: 16,
-    backgroundColor: "#121212",
-    borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    backgroundColor: "#FFFFFF",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#F3F4F6",
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     flex: 1,
     textAlign: "center",
   },
@@ -227,6 +227,11 @@ const styles = StyleSheet.create({
   },
   itemCard: {
     marginBottom: 12,
+    backgroundColor: "#FFFFFF",
+    borderColor: "#F3F4F6",
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    borderWidth: 1,
   },
   itemContent: {
     flexDirection: "row",
@@ -237,7 +242,7 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 8,
     overflow: "hidden",
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F3F4F6",
   },
   itemImage: {
     width: "100%",
@@ -256,12 +261,12 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
     marginBottom: 4,
   },
   itemCategory: {
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#6B7280",
     marginBottom: 8,
   },
   itemPrice: {
@@ -277,16 +282,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 32,
+    backgroundColor: "#FFFFFF",
   },
   emptyTitle: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     marginTop: 24,
   },
   emptySubtitle: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
     marginTop: 8,
     textAlign: "center",
   },

@@ -1,20 +1,20 @@
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  Alert,
+    Alert,
+    Image,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { Card } from "../../components/ui/Card";
 import { Button } from "../../components/ui/Button";
-import { useCartStore } from "../../store/cart-store";
+import { Card } from "../../components/ui/Card";
 import { useAuthStore } from "../../store/auth-store";
+import { useCartStore } from "../../store/cart-store";
 import { StablecoinType } from "../../types";
 
 export default function CartScreen() {
@@ -80,7 +80,7 @@ export default function CartScreen() {
         </View>
 
         <View style={styles.emptyContainer}>
-          <Ionicons name="cart-outline" size={80} color="#4a4a4a" />
+          <Ionicons name="cart-outline" size={80} color="#D1D5DB" />
           <Text style={styles.emptyTitle}>Your cart is empty</Text>
           <Text style={styles.emptySubtitle}>
             Start shopping to add items to your cart
@@ -101,7 +101,7 @@ export default function CartScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#ffffff" />
+          <Ionicons name="arrow-back" size={24} color="#111827" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Shopping Cart</Text>
         <TouchableOpacity onPress={handleClearCart}>
@@ -203,7 +203,7 @@ export default function CartScreen() {
                       }
                       style={styles.quantityButton}
                     >
-                      <Ionicons name="remove" size={18} color="#ffffff" />
+                      <Ionicons name="remove" size={18} color="#111827" />
                     </TouchableOpacity>
                     <Text style={styles.quantityText}>{item.quantity}</Text>
                     <TouchableOpacity
@@ -212,7 +212,7 @@ export default function CartScreen() {
                       }
                       style={styles.quantityButton}
                     >
-                      <Ionicons name="add" size={18} color="#ffffff" />
+                      <Ionicons name="add" size={18} color="#111827" />
                     </TouchableOpacity>
                   </View>
 
@@ -274,28 +274,28 @@ export default function CartScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#FFFFFF", // White
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     padding: 16,
-    backgroundColor: "#121212",
-    borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    backgroundColor: "#FFFFFF",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#E5E7EB",
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
     flex: 1,
     textAlign: "center",
     marginLeft: -24, // Offset to center with back button
   },
   clearButton: {
     fontSize: 14,
-    color: "#ef4444",
+    color: "#EF4444", // Red
     fontWeight: "600",
   },
   content: {
@@ -303,14 +303,15 @@ const styles = StyleSheet.create({
   },
   stablecoinContainer: {
     padding: 16,
-    backgroundColor: "#121212",
+    backgroundColor: "#F9FAFB", // Very Light Gray
     marginBottom: 8,
   },
   sectionTitle: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#a0a0a0",
+    color: "#6B7280",
     marginBottom: 12,
+    fontFamily: 'Inter-Medium',
   },
   stablecoinButtons: {
     flexDirection: "row",
@@ -320,28 +321,36 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 12,
     borderRadius: 8,
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#FFFFFF",
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#E5E7EB",
     alignItems: "center",
   },
   stablecoinButtonActive: {
-    backgroundColor: "#8b5cf6",
-    borderColor: "#8b5cf6",
+    backgroundColor: "#111827",
+    borderColor: "#111827",
   },
   stablecoinText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#a0a0a0",
+    color: "#6B7280",
   },
   stablecoinTextActive: {
-    color: "#ffffff",
+    color: "#FFFFFF",
   },
   itemsContainer: {
     padding: 16,
   },
   itemCard: {
     marginBottom: 12,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
   },
   itemContent: {
     flexDirection: "row",
@@ -352,7 +361,7 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 8,
     overflow: "hidden",
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F3F4F6",
   },
   itemImage: {
     width: "100%",
@@ -371,18 +380,19 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
     marginBottom: 4,
+    fontFamily: 'Inter-SemiBold',
   },
   itemCategory: {
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#9CA3AF",
     marginBottom: 8,
   },
   itemPrice: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#8b5cf6",
+    color: "#111827",
   },
   removeButton: {
     padding: 4,
@@ -396,32 +406,42 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#E5E7EB",
     borderRadius: 8,
     overflow: "hidden",
+    backgroundColor: "#FFFFFF",
   },
   quantityButton: {
     padding: 8,
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F3F4F6",
   },
   quantityText: {
     paddingHorizontal: 16,
     fontSize: 16,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
   },
   itemTotal: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
   },
   summaryCard: {
     margin: 16,
+    backgroundColor: "#FFFFFF", // White
+    borderRadius: 16,
+    padding: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
   },
   summaryTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
     marginBottom: 16,
   },
   summaryRow: {
@@ -431,33 +451,33 @@ const styles = StyleSheet.create({
   },
   summaryLabel: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
   },
   summaryValue: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
   },
   summaryTotal: {
     marginTop: 12,
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: "#2a2a2a",
+    borderTopColor: "#E5E7EB",
   },
   totalLabel: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
   },
   totalValue: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#8b5cf6",
+    color: "#111827", // Charcoal
     textAlign: "right",
   },
   totalCurrency: {
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#6B7280",
     textAlign: "right",
   },
   bottomBar: {
@@ -465,41 +485,49 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     padding: 16,
-    backgroundColor: "#121212",
+    backgroundColor: "#FFFFFF",
     borderTopWidth: 1,
-    borderTopColor: "#2a2a2a",
+    borderTopColor: "#E5E7EB",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 4,
   },
   bottomLabel: {
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#6B7280",
   },
   bottomTotal: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
   },
   checkoutButton: {
     paddingHorizontal: 24,
+    backgroundColor: "#111827", // Charcoal
   },
   emptyContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     padding: 32,
+    backgroundColor: "#FFFFFF",
   },
   emptyTitle: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     marginTop: 24,
   },
   emptySubtitle: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
     marginTop: 8,
     textAlign: "center",
   },
   browseButton: {
     marginTop: 24,
+    backgroundColor: "#111827",
   },
 });

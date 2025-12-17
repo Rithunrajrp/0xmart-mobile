@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-  Image,
-  Dimensions,
-} from "react-native";
-import { useRouter, useLocalSearchParams } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { Product } from "../../types";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import {
+    ActivityIndicator,
+    Dimensions,
+    Image,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import api from "../../api";
 import { useCartStore } from "../../store/cart-store";
 import { useFavoritesStore } from "../../store/favorites-store";
-import api from "../../api";
+import { Product } from "../../types";
 
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = (width - 48) / 2;
@@ -106,14 +106,14 @@ export default function SearchScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color="#ffffff" />
+          <Ionicons name="arrow-back" size={24} color="#111827" />
         </TouchableOpacity>
         <View style={styles.searchBar}>
-          <Ionicons name="search-outline" size={20} color="#a0a0a0" />
+          <Ionicons name="search-outline" size={20} color="#6B7280" />
           <TextInput
             style={styles.searchInput}
             placeholder="Search products..."
-            placeholderTextColor="#a0a0a0"
+            placeholderTextColor="#9CA3AF"
             value={searchQuery}
             onChangeText={setSearchQuery}
             onSubmitEditing={() => handleSearch()}
@@ -122,7 +122,7 @@ export default function SearchScreen() {
           />
           {searchQuery.length > 0 && (
             <TouchableOpacity onPress={() => setSearchQuery("")}>
-              <Ionicons name="close-circle" size={20} color="#a0a0a0" />
+              <Ionicons name="close-circle" size={20} color="#9CA3AF" />
             </TouchableOpacity>
           )}
         </View>
@@ -132,11 +132,11 @@ export default function SearchScreen() {
       <ScrollView style={styles.content}>
         {loading ? (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#8b5cf6" />
+            <ActivityIndicator size="large" color="#111827" />
           </View>
         ) : searched && products.length === 0 ? (
           <View style={styles.emptyContainer}>
-            <Ionicons name="search-outline" size={64} color="#6a6a6a" />
+            <Ionicons name="search-outline" size={64} color="#D1D5DB" />
             <Text style={styles.emptyTitle}>No products found</Text>
             <Text style={styles.emptySubtitle}>
               Try searching with different keywords
@@ -153,7 +153,7 @@ export default function SearchScreen() {
           </View>
         ) : (
           <View style={styles.emptyContainer}>
-            <Ionicons name="search-outline" size={64} color="#6a6a6a" />
+            <Ionicons name="search-outline" size={64} color="#D1D5DB" />
             <Text style={styles.emptyTitle}>Start searching</Text>
             <Text style={styles.emptySubtitle}>
               Enter keywords to find products
@@ -168,7 +168,7 @@ export default function SearchScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#FFFFFF", // White
   },
   header: {
     flexDirection: "row",
@@ -176,8 +176,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     gap: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: "#1e1e1e",
+    backgroundColor: "#FFFFFF",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#F3F4F6",
   },
   backButton: {
     padding: 4,
@@ -186,7 +187,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F3F4F6", // Light Gray
     borderRadius: 12,
     paddingHorizontal: 12,
     paddingVertical: 10,
@@ -194,7 +195,7 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     flex: 1,
-    color: "#ffffff",
+    color: "#111827", // Charcoal
     fontSize: 15,
   },
   content: {
@@ -205,7 +206,7 @@ const styles = StyleSheet.create({
   },
   resultsText: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280", // Gray
     marginBottom: 16,
     paddingHorizontal: 16,
   },
@@ -216,10 +217,16 @@ const styles = StyleSheet.create({
   },
   productCard: {
     width: CARD_WIDTH,
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#FFFFFF",
     borderRadius: 12,
     marginBottom: 12,
     overflow: "hidden",
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
   productCardLeft: {
     marginRight: 12,
@@ -230,18 +237,22 @@ const styles = StyleSheet.create({
   productImage: {
     width: "100%",
     height: 160,
-    backgroundColor: "#2a2a2a",
+    backgroundColor: "#F3F4F6",
   },
   favoriteButton: {
     position: "absolute",
     top: 8,
     right: 8,
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
     borderRadius: 20,
     width: 36,
     height: 36,
     justifyContent: "center",
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   productInfo: {
     padding: 12,
@@ -249,14 +260,14 @@ const styles = StyleSheet.create({
   productName: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
     marginBottom: 4,
     height: 40,
   },
   productPrice: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "#8b5cf6",
+    color: "#111827",
   },
   loadingContainer: {
     flex: 1,
@@ -274,13 +285,13 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     marginTop: 16,
     marginBottom: 8,
   },
   emptySubtitle: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
     textAlign: "center",
   },
 });

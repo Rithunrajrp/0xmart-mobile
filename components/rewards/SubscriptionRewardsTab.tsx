@@ -1,10 +1,10 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
 import * as Haptics from "expo-haptics";
-import { SubscriptionRewardStats, MembershipTier } from "../../types/rewards";
+import { LinearGradient } from "expo-linear-gradient";
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useRewardsStore } from "../../store/rewards-store";
+import { MembershipTier, SubscriptionRewardStats } from "../../types/rewards";
 import { Card } from "../ui/Card";
 
 interface Props {
@@ -162,7 +162,7 @@ export default function SubscriptionRewardsTab({ stats, currentTier }: Props) {
       {subscriptionTiers.map((tier) => (
         <View key={tier.id} style={styles.tierCardContainer}>
           <LinearGradient
-            colors={tier.color}
+            colors={tier.color as any}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.tierCard}
@@ -260,38 +260,47 @@ export default function SubscriptionRewardsTab({ stats, currentTier }: Props) {
 
 const styles = StyleSheet.create({
   activeSubscriptionCard: {
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: "rgba(16, 185, 129, 0.3)",
+    borderRadius: 24,
+    padding: 24,
+    marginBottom: 24,
+    shadowColor: "#10B981",
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.2,
+    shadowRadius: 16,
+    elevation: 8,
   },
   activeSubscriptionHeader: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 12,
+    marginBottom: 20,
   },
   activeSubscriptionLabel: {
-    color: "rgba(255, 255, 255, 0.8)",
+    color: "rgba(255, 255, 255, 0.9)",
     fontSize: 14,
-    fontWeight: "500",
+    fontWeight: "600",
+    fontFamily: "Inter-SemiBold",
+    letterSpacing: 0.5,
   },
   activeSubscriptionTier: {
     color: "#ffffff",
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "700",
     marginTop: 4,
+    fontFamily: "PlayfairDisplay-Bold",
   },
   activeSubscriptionIconContainer: {
     backgroundColor: "rgba(255, 255, 255, 0.2)",
     borderRadius: 999,
     padding: 12,
+    backdropFilter: "blur(4px)",
   },
   activeSubscriptionStats: {
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    borderRadius: 12,
-    padding: 12,
+    backgroundColor: "rgba(255, 255, 255, 0.15)",
+    borderRadius: 16,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.2)",
   },
   activeSubscriptionStatRow: {
     flexDirection: "row",
@@ -302,77 +311,99 @@ const styles = StyleSheet.create({
   activeSubscriptionStatLabel: {
     color: "rgba(255, 255, 255, 0.9)",
     fontSize: 14,
+    fontFamily: "Inter-Medium",
   },
   activeSubscriptionStatValue: {
     color: "#ffffff",
     fontWeight: "700",
+    fontSize: 15,
+    fontFamily: "Inter-Bold",
   },
   benefitsCard: {
     padding: 20,
+    backgroundColor: "#F9FAFB",
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
   },
   benefitsTitle: {
-    color: "#ffffff",
-    fontSize: 16,
+    color: "#111827",
+    fontSize: 18,
     fontWeight: "700",
     marginBottom: 16,
+    fontFamily: "Inter-Bold",
   },
   benefitsList: {
-    gap: 12,
+    gap: 16,
   },
   benefitItem: {
     flexDirection: "row",
     alignItems: "center",
   },
   benefitText: {
-    color: "rgba(255, 255, 255, 0.8)",
+    color: "#4B5563",
     fontSize: 14,
     marginLeft: 12,
+    fontFamily: "Inter-Medium",
   },
   header: {
     marginBottom: 24,
+    paddingHorizontal: 16,
   },
   headerTitle: {
-    color: "#ffffff",
-    fontSize: 20,
+    color: "#111827",
+    fontSize: 24,
     fontWeight: "700",
     marginBottom: 8,
+    fontFamily: "PlayfairDisplay-Bold",
+    textAlign: "center",
   },
   headerSubtitle: {
-    color: "rgba(255, 255, 255, 0.6)",
-    fontSize: 14,
+    color: "#6B7280",
+    fontSize: 15,
+    textAlign: "center",
+    lineHeight: 22,
+    fontFamily: "Inter-Regular",
   },
   tierCardContainer: {
-    marginBottom: 16,
+    marginBottom: 20,
+    paddingHorizontal: 8,
   },
   tierCard: {
-    borderRadius: 16,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.2)",
+    borderRadius: 24,
+    padding: 24,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 5,
   },
   popularBadge: {
-    backgroundColor: "#FBBF24",
-    borderRadius: 999,
+    backgroundColor: "#FEF3C7",
+    borderRadius: 20,
     paddingHorizontal: 12,
-    paddingVertical: 4,
+    paddingVertical: 6,
     alignSelf: "flex-start",
-    marginBottom: 12,
+    marginBottom: 16,
   },
   popularBadgeText: {
-    color: "#0a0a0a",
+    color: "#D97706",
     fontSize: 12,
     fontWeight: "700",
+    letterSpacing: 0.5,
+    fontFamily: "Inter-Bold",
   },
   tierCardHeader: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 16,
+    marginBottom: 20,
   },
   tierCardName: {
     color: "#ffffff",
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "700",
+    fontFamily: "PlayfairDisplay-Bold",
   },
   tierCardPriceRow: {
     flexDirection: "row",
@@ -381,88 +412,106 @@ const styles = StyleSheet.create({
   },
   tierCardPrice: {
     color: "#ffffff",
-    fontSize: 32,
+    fontSize: 36,
     fontWeight: "700",
+    fontFamily: "Inter-Bold",
   },
   tierCardPriceUnit: {
-    color: "rgba(255, 255, 255, 0.7)",
+    color: "rgba(255, 255, 255, 0.8)",
     fontSize: 14,
     marginLeft: 4,
+    fontFamily: "Inter-Medium",
   },
   instantBonusContainer: {
     backgroundColor: "rgba(255, 255, 255, 0.2)",
-    borderRadius: 12,
-    padding: 12,
-    marginBottom: 16,
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 20,
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: 12,
+    backdropFilter: "blur(4px)",
   },
   instantBonusText: {
     color: "#ffffff",
     fontWeight: "700",
+    fontSize: 15,
+    fontFamily: "Inter-SemiBold",
   },
   featuresList: {
-    gap: 8,
-    marginBottom: 16,
+    gap: 12,
+    marginBottom: 24,
   },
   featureItem: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: 10,
   },
   featureText: {
-    color: "rgba(255, 255, 255, 0.9)",
-    fontSize: 14,
+    color: "rgba(255, 255, 255, 0.95)",
+    fontSize: 15,
+    fontFamily: "Inter-Medium",
   },
   subscribeButton: {
     backgroundColor: "#ffffff",
-    borderRadius: 12,
-    paddingVertical: 12,
+    borderRadius: 16,
+    paddingVertical: 16,
+    shadowColor: "rgba(0, 0, 0, 0.1)",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 12,
   },
   subscribeButtonText: {
-    color: "#0a0a0a",
+    color: "#111827",
     fontWeight: "700",
     textAlign: "center",
+    fontSize: 16,
+    fontFamily: "Inter-Bold",
   },
   whySubscribeCard: {
     marginTop: 8,
-    padding: 20,
+    padding: 24,
+    backgroundColor: "#111827",
+    borderRadius: 24,
   },
   whySubscribeTitle: {
     color: "#ffffff",
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "700",
-    marginBottom: 16,
+    marginBottom: 24,
+    fontFamily: "PlayfairDisplay-Bold",
   },
   whySubscribeList: {
-    gap: 12,
+    gap: 20,
   },
   whySubscribeItem: {
     flexDirection: "row",
     alignItems: "flex-start",
   },
   whySubscribeIconContainer: {
-    backgroundColor: "#14B8A6",
-    borderRadius: 999,
-    width: 24,
-    height: 24,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    borderRadius: 12,
+    width: 32,
+    height: 32,
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 12,
+    marginRight: 16,
     marginTop: 2,
   },
   whySubscribeContent: {
     flex: 1,
   },
   whySubscribeItemTitle: {
-    color: "rgba(255, 255, 255, 0.9)",
-    fontSize: 14,
+    color: "#ffffff",
+    fontSize: 16,
     fontWeight: "600",
+    fontFamily: "Inter-SemiBold",
   },
   whySubscribeItemDescription: {
     color: "rgba(255, 255, 255, 0.6)",
-    fontSize: 12,
+    fontSize: 13,
     marginTop: 4,
+    lineHeight: 20,
+    fontFamily: "Inter-Regular",
   },
 });

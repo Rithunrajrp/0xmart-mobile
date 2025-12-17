@@ -1,8 +1,8 @@
-import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { User, AuthTokens } from "../types";
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 import api from "../api";
+import { AuthTokens, User } from "../types";
 
 interface AuthState {
   user: User | null;
@@ -17,9 +17,11 @@ interface AuthState {
   setUser: (user: User) => void;
   login: (
     email: string,
-    otp: string,
+    emailOtp: string,
     countryCode: string,
-    phoneNumber: string
+    phoneNumber: string,
+    phoneOtp: string,
+    referralCode?: string
   ) => Promise<void>;
   logout: () => Promise<void>;
   fetchUser: () => Promise<void>;
@@ -52,17 +54,21 @@ export const useAuthStore = create<AuthState>()(
 
       login: async (
         email: string,
-        otp: string,
+        emailOtp: string,
         countryCode: string,
-        phoneNumber: string
+        phoneNumber: string,
+        phoneOtp: string,
+        referralCode?: string
       ) => {
         set({ isLoading: true, error: null });
         try {
           const response = await api.verifyOTP(
             email,
-            otp,
+            emailOtp,
             countryCode,
-            phoneNumber
+            phoneNumber,
+            phoneOtp,
+            referralCode
           );
 
           await get().setTokens({
@@ -91,7 +97,7 @@ export const useAuthStore = create<AuthState>()(
           }
         } catch (error: any) {
           set({
-            error: error.response?.data?.message || "Login failed",
+            error: error.response?.data?.message || "Login failed. Please check your OTPs.",
             isLoading: false,
           });
           throw error;

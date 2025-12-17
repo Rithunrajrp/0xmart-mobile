@@ -1,6 +1,7 @@
-import axios, { AxiosInstance, AxiosError } from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios, { AxiosError, AxiosInstance } from "axios";
 import Constants from "expo-constants";
+import { router } from "expo-router";
 
 const FALLBACK_DEV_URL = "http://localhost:8000/api/v1";
 const FALLBACK_PROD_URL = "https://api.0xmart.com/api/v1";
@@ -114,10 +115,20 @@ class ApiClient {
             }
             return this.client(originalRequest);
           } catch (refreshError: any) {
-            console.error("[API] Token refresh failed:", refreshError.response?.data || refreshError.message);
+            console.error("[API] Token refresh failed - Session expired");
+
+            // Clear all local storage
             await AsyncStorage.clear();
-            // You might want to navigate to login screen here
-            return Promise.reject(error);
+
+            // Force navigation to login screen
+            setTimeout(() => {
+              if (router.canGoBack()) {
+                router.dismissAll();
+              }
+              router.replace("/auth/login");
+            }, 100);
+
+            return Promise.reject(refreshError);
           }
         }
 
@@ -130,26 +141,38 @@ class ApiClient {
   // Auth
   // ============================================================================
 
-  async sendOTP(email: string, countryCode: string, phoneNumber: string) {
+  async sendOTP(email: string, countryCode: string, phoneNumber: string, referralCode?: string) {
     const { data } = await this.client.post("/auth/send-otp", {
       email,
       countryCode,
       phoneNumber,
+      referralCode,
     });
     return data;
   }
 
   async verifyOTP(
     email: string,
-    otp: string,
+    emailOtp: string,
     countryCode: string,
-    phoneNumber: string
+    phoneNumber: string,
+    phoneOtp: string,
+    referralCode?: string
   ) {
     const { data } = await this.client.post("/auth/verify-otp", {
       email,
-      otp,
+      emailOtp,
       countryCode,
       phoneNumber,
+      phoneOtp,
+      referralCode,
+    });
+    return data;
+  }
+
+  async validateReferralCode(code: string): Promise<{ valid: boolean; message: string; referrerEmail?: string }> {
+    const { data } = await this.client.get("/auth/validate-referral-code", {
+      params: { code },
     });
     return data;
   }

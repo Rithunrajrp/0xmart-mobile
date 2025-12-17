@@ -1,22 +1,21 @@
+import { Ionicons } from "@expo/vector-icons";
+import * as Clipboard from "expo-clipboard";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
+    Alert,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { useRouter, useLocalSearchParams } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { Card } from "../../components/ui/Card";
-import { Button } from "../../components/ui/Button";
-import { Wallet } from "../../types";
-import { NETWORK_DISPLAY_NAMES } from "../../api";
-import api from "../../api";
-import * as Clipboard from "expo-clipboard";
 import QRCode from "react-native-qrcode-svg";
+import { SafeAreaView } from "react-native-safe-area-context";
+import api, { NETWORK_DISPLAY_NAMES } from "../../api";
+import { Button } from "../../components/ui/Button";
+import { Card } from "../../components/ui/Card";
+import { Wallet } from "../../types";
 
 export default function DepositScreen() {
   const router = useRouter();
@@ -87,7 +86,7 @@ export default function DepositScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#0a0a0a" />
+          <Ionicons name="arrow-back" size={24} color="#111827" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Deposit {wallet.stablecoinType}</Text>
         <View style={{ width: 24 }} />
@@ -97,7 +96,7 @@ export default function DepositScreen() {
         {/* Instructions Card */}
         <Card style={styles.instructionsCard}>
           <View style={styles.instructionHeader}>
-            <Ionicons name="information-circle" size={24} color="#8b5cf6" />
+            <Ionicons name="information-circle" size={24} color="#166534" />
             <Text style={styles.instructionTitle}>How to Deposit</Text>
           </View>
           <Text style={styles.instructionText}>
@@ -115,7 +114,7 @@ export default function DepositScreen() {
         <Card style={styles.networkCard}>
           <Text style={styles.networkLabel}>Network</Text>
           <View style={styles.networkBadge}>
-            <Ionicons name="git-network" size={16} color="#a0a0a0" />
+            <Ionicons name="git-network" size={16} color="#111827" />
             <Text style={styles.networkText}>
               {NETWORK_DISPLAY_NAMES[wallet.network] || wallet.network}
             </Text>
@@ -178,21 +177,21 @@ export default function DepositScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#FFFFFF", // White
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     padding: 16,
-    backgroundColor: "#121212",
-    borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    backgroundColor: "#FFFFFF",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#E5E7EB",
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
   },
   loadingContainer: {
     flex: 1,
@@ -208,7 +207,7 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
     marginTop: 16,
   },
   content: {
@@ -217,9 +216,11 @@ const styles = StyleSheet.create({
   },
   instructionsCard: {
     marginBottom: 16,
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F0FDF4", // Green 50
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#86EFAC", // Green 300
+    borderRadius: 12,
+    padding: 16,
   },
   instructionHeader: {
     flexDirection: "row",
@@ -230,89 +231,106 @@ const styles = StyleSheet.create({
   instructionTitle: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#166534", // Green 800
   },
   instructionText: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#15803D", // Green 700
     marginBottom: 8,
   },
   networkCard: {
     marginBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    padding: 16,
   },
   networkLabel: {
     fontSize: 14,
-    color: "#6a6a6a",
+    color: "#6B7280",
     marginBottom: 8,
   },
   networkBadge: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F9FAFB",
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 8,
     alignSelf: "flex-start",
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#E5E7EB",
   },
   networkText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#a0a0a0",
+    color: "#111827",
   },
   networkWarning: {
     fontSize: 12,
-    color: "#f59e0b",
+    color: "#F59E0B", // Amber 500
     fontWeight: "600",
   },
   qrCard: {
     marginBottom: 16,
     alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    padding: 16,
   },
   qrLabel: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
     marginBottom: 16,
   },
   qrContainer: {
     padding: 16,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#FFFFFF",
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#E5E7EB",
   },
   addressCard: {
     marginBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    padding: 16,
   },
   addressLabel: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
     marginBottom: 12,
   },
   addressBox: {
-    backgroundColor: "#121212",
+    backgroundColor: "#F9FAFB", // Light Gray
     padding: 16,
     borderRadius: 8,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#E5E7EB",
   },
   addressText: {
     fontSize: 12,
-    color: "#ffffff",
+    color: "#111827",
     fontFamily: "monospace",
     lineHeight: 18,
   },
   warningCard: {
     marginBottom: 16,
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#FFFBEB", // Amber 50
     borderWidth: 1,
-    borderColor: "#f59e0b",
+    borderColor: "#FCD34D", // Amber 300
+    borderRadius: 12,
+    padding: 16,
   },
   warningHeader: {
     flexDirection: "row",
@@ -323,11 +341,11 @@ const styles = StyleSheet.create({
   warningTitle: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#B45309", // Amber 700
   },
   warningText: {
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#92400E", // Amber 800
     marginBottom: 6,
     lineHeight: 18,
   },

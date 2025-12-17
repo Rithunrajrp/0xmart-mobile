@@ -1,6 +1,6 @@
-import React from "react";
-import { View, StyleSheet, Platform } from "react-native";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
+import React from "react";
+import { Platform, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AnimatedTabBarButton } from "./AnimatedTabBarButton";
 
@@ -93,9 +93,9 @@ export function CustomTabBar({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#FFFFFF",
     borderTopWidth: 1,
-    borderTopColor: "#2a2a2a",
+    borderTopColor: "#E5E7EB",
     paddingTop: 4,
   },
   tabBar: {

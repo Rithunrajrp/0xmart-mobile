@@ -1,12 +1,12 @@
+import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useRef } from "react";
 import {
-  View,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  Animated,
+    Animated,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 
 interface AnimatedTabBarButtonProps {
   isFocused: boolean;
@@ -117,7 +117,7 @@ export function AnimatedTabBarButton({
           <Ionicons
             name={iconName as any}
             size={22}
-            color={isFocused ? "#ffffff" : "#6a6a6a"}
+            color={isFocused ? "#ffffff" : "#6B7280"}
           />
           {badge !== undefined && badge > 0 && (
             <View style={styles.badge}>
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     top: -4,
     width: 28,
     height: 2,
-    backgroundColor: "#8b5cf6",
+    backgroundColor: "#111827", // Charcoal Black
     borderRadius: 2,
   },
   iconContainer: {
@@ -173,26 +173,27 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   iconContainerActive: {
-    backgroundColor: "#8b5cf6",
-    shadowColor: "#8b5cf6",
+    backgroundColor: "#111827", // Charcoal Black
+    shadowColor: "#111827",
     shadowOffset: {
       width: 0,
       height: 4,
     },
-    shadowOpacity: 0.6,
-    shadowRadius: 12,
-    elevation: 8,
+    shadowOpacity: 0.3, // Softer shadow
+    shadowRadius: 8,
+    elevation: 4,
   },
   label: {
     fontSize: 10,
     fontWeight: "600",
     marginTop: 1,
+    fontFamily: 'Inter-Medium',
   },
   labelActive: {
-    color: "#8b5cf6",
+    color: "#111827", // Charcoal Black
   },
   labelInactive: {
-    color: "#6a6a6a",
+    color: "#6B7280", // Gray 500
   },
   badge: {
     position: "absolute",
@@ -206,7 +207,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 5,
     borderWidth: 2,
-    borderColor: "#0a0a0a",
+    borderColor: "#FFFFFF", // White border matching tab bar
   },
   badgeText: {
     color: "#ffffff",

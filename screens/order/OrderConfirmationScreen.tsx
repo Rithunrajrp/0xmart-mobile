@@ -1,18 +1,18 @@
+import { Ionicons } from "@expo/vector-icons";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  ActivityIndicator,
+    ActivityIndicator,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
 } from "react-native";
-import { useRouter, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { Card } from "../../components/ui/Card";
-import { Button } from "../../components/ui/Button";
-import { Order } from "../../types";
 import api from "../../api";
+import { Button } from "../../components/ui/Button";
+import { Card } from "../../components/ui/Card";
+import { Order } from "../../types";
 
 export default function OrderConfirmationScreen() {
   const router = useRouter();
@@ -41,7 +41,7 @@ export default function OrderConfirmationScreen() {
     return (
       <SafeAreaView style={styles.container} edges={["top"]}>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#0f0f0f" />
+          <ActivityIndicator size="large" color="#111827" />
         </View>
       </SafeAreaView>
     );
@@ -51,7 +51,7 @@ export default function OrderConfirmationScreen() {
     return (
       <SafeAreaView style={styles.container} edges={["top"]}>
         <View style={styles.errorContainer}>
-          <Ionicons name="alert-circle-outline" size={64} color="#303030" />
+          <Ionicons name="alert-circle-outline" size={64} color="#111827" />
           <Text style={styles.errorText}>Order not found</Text>
           <Button
             title="Go to Orders"
@@ -69,7 +69,7 @@ export default function OrderConfirmationScreen() {
         {/* Success Icon */}
         <View style={styles.successIcon}>
           <View style={styles.iconCircle}>
-            <Ionicons name="checkmark" size={64} color="#2b2b2b" />
+            <Ionicons name="checkmark" size={64} color="#111827" />
           </View>
         </View>
 
@@ -110,7 +110,7 @@ export default function OrderConfirmationScreen() {
           <View style={styles.orderRow}>
             <Text style={styles.orderLabel}>Payment Status</Text>
             <View style={styles.paidBadge}>
-              <Ionicons name="checkmark-circle" size={16} color="#2b2b2b" />
+              <Ionicons name="checkmark-circle" size={16} color="#059669" />
               <Text style={styles.paidText}>Paid</Text>
             </View>
           </View>
@@ -126,7 +126,7 @@ export default function OrderConfirmationScreen() {
         {/* Shipping Address */}
         <Card style={styles.addressCard}>
           <View style={styles.cardHeader}>
-            <Ionicons name="location" size={20} color="#0f0f0f" />
+            <Ionicons name="location" size={20} color="#111827" />
             <Text style={styles.cardTitle}>Shipping Address</Text>
           </View>
 
@@ -150,7 +150,7 @@ export default function OrderConfirmationScreen() {
         {/* Order Items */}
         <Card style={styles.itemsCard}>
           <View style={styles.cardHeader}>
-            <Ionicons name="cube" size={20} color="#0f0f0f" />
+            <Ionicons name="cube" size={20} color="#111827" />
             <Text style={styles.cardTitle}>Order Items</Text>
           </View>
 
@@ -185,7 +185,7 @@ export default function OrderConfirmationScreen() {
         {/* Info Box */}
         <Card style={styles.infoCard}>
           <View style={styles.infoRow}>
-            <Ionicons name="information-circle" size={20} color="#0f0f0f" />
+            <Ionicons name="information-circle" size={20} color="#6B7280" />
             <Text style={styles.infoText}>
               You will receive updates about your order via email. Track your order
               status in the Orders section.
@@ -207,7 +207,7 @@ export default function OrderConfirmationScreen() {
             onPress={() => router.replace("/")}
             variant="outline"
             style={styles.actionButton}
-            icon={<Ionicons name="storefront" size={20} color="#0f0f0f" />}
+            icon={<Ionicons name="storefront" size={20} color="#111827" />}
           />
         </View>
 
@@ -220,7 +220,7 @@ export default function OrderConfirmationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f7f7f7",
+    backgroundColor: "#FFFFFF", // White
   },
   loadingContainer: {
     flex: 1,
@@ -236,11 +236,12 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#111827", // Charcoal
     marginTop: 16,
   },
   errorButton: {
     marginTop: 24,
+    backgroundColor: "#111827",
   },
   content: {
     flex: 1,
@@ -256,7 +257,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#F3F4F6", // Light Gray
     alignItems: "center",
     justifyContent: "center",
   },
@@ -267,15 +268,26 @@ const styles = StyleSheet.create({
   successTitle: {
     fontSize: 28,
     fontWeight: "700",
-    color: "#0a0a0a",
+    color: "#111827", // Charcoal
     marginBottom: 8,
+    fontFamily: 'PlayfairDisplay-Bold',
   },
   successSubtitle: {
     fontSize: 16,
-    color: "#6a6a6a",
+    color: "#6B7280", // Gray
+    fontFamily: 'Inter-Regular',
   },
   orderCard: {
     marginBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+    padding: 16,
   },
   orderHeader: {
     alignItems: "center",
@@ -283,18 +295,18 @@ const styles = StyleSheet.create({
   },
   orderLabel: {
     fontSize: 12,
-    color: "#6a6a6a",
+    color: "#6B7280",
     marginBottom: 4,
   },
   orderNumber: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#0a0a0a",
+    color: "#111827",
     fontFamily: "monospace",
   },
   divider: {
     height: 1,
-    backgroundColor: "#e3e3e3",
+    backgroundColor: "#F3F4F6",
     marginVertical: 16,
   },
   orderRow: {
@@ -304,7 +316,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   statusBadge: {
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#F3F4F6",
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 6,
@@ -312,25 +324,25 @@ const styles = StyleSheet.create({
   statusText: {
     fontSize: 12,
     fontWeight: "600",
-    color: "#202020",
+    color: "#111827",
     textTransform: "uppercase",
   },
   orderAmount: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#0f0f0f",
+    color: "#111827",
     textAlign: "right",
   },
   orderCurrency: {
     fontSize: 12,
-    color: "#6a6a6a",
+    color: "#6B7280",
     textAlign: "right",
   },
   paidBadge: {
     flexDirection: "row",
     alignItems: "center",
     gap: 4,
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#ECFDF5", // Green 50
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 6,
@@ -338,15 +350,24 @@ const styles = StyleSheet.create({
   paidText: {
     fontSize: 12,
     fontWeight: "600",
-    color: "#2d2d2d",
+    color: "#059669", // Green 600
   },
   orderValue: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#0a0a0a",
+    color: "#111827",
   },
   addressCard: {
     marginBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+    padding: 16,
   },
   cardHeader: {
     flexDirection: "row",
@@ -357,21 +378,30 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#111827",
   },
   addressName: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#111827",
     marginBottom: 8,
   },
   addressText: {
     fontSize: 14,
-    color: "#6a6a6a",
+    color: "#6B7280",
     marginBottom: 4,
   },
   itemsCard: {
     marginBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+    padding: 16,
   },
   orderItem: {
     flexDirection: "row",
@@ -381,7 +411,7 @@ const styles = StyleSheet.create({
   },
   orderItemBorder: {
     borderBottomWidth: 1,
-    borderBottomColor: "#e3e3e3",
+    borderBottomColor: "#F3F4F6",
   },
   itemDetails: {
     flex: 1,
@@ -390,17 +420,17 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#111827",
     marginBottom: 4,
   },
   itemQuantity: {
     fontSize: 12,
-    color: "#6a6a6a",
+    color: "#6B7280",
   },
   itemPrice: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#111827",
   },
   totalRow: {
     flexDirection: "row",
@@ -408,21 +438,23 @@ const styles = StyleSheet.create({
     marginTop: 16,
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: "#e3e3e3",
+    borderTopColor: "#E5E7EB",
   },
   totalLabel: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#0a0a0a",
+    color: "#111827",
   },
   totalValue: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#0f0f0f",
+    color: "#111827", // Charcoal
   },
   infoCard: {
     marginBottom: 16,
-    backgroundColor: "#f6f6f6",
+    backgroundColor: "#F9FAFB", // Light Gray
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
   },
   infoRow: {
     flexDirection: "row",
@@ -431,7 +463,7 @@ const styles = StyleSheet.create({
   infoText: {
     flex: 1,
     fontSize: 12,
-    color: "#151515",
+    color: "#6B7280",
     lineHeight: 18,
   },
   actions: {
@@ -439,5 +471,6 @@ const styles = StyleSheet.create({
   },
   actionButton: {
     width: "100%",
+    backgroundColor: "#111827",
   },
 });

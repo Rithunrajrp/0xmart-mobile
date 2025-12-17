@@ -1,21 +1,20 @@
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  RefreshControl,
+    FlatList,
+    RefreshControl,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { Card } from "../../components/ui/Card";
+import api from "../../api";
 import { Button } from "../../components/ui/Button";
-import { TopBar } from "../../components/navigation/TopBar";
+import { Card } from "../../components/ui/Card";
 import { useAuthStore } from "../../store/auth-store";
 import { Order, OrderStatus } from "../../types";
-import api from "../../api";
 
 export default function OrdersScreen() {
   const router = useRouter();
@@ -110,7 +109,7 @@ export default function OrdersScreen() {
           {/* Tracking */}
           {item.trackingNumber && (
             <View style={styles.trackingRow}>
-              <Ionicons name="cube-outline" size={16} color="#a0a0a0" />
+              <Ionicons name="cube-outline" size={16} color="#6B7280" />
               <Text style={styles.trackingText}>
                 Tracking: {item.trackingNumber}
               </Text>
@@ -124,7 +123,7 @@ export default function OrdersScreen() {
               onPress={() => router.push(`/orders/${item.id}`)}
             >
               <Text style={styles.viewButtonText}>View Details</Text>
-              <Ionicons name="chevron-forward" size={16} color="#8b5cf6" />
+              <Ionicons name="chevron-forward" size={16} color="#111827" />
             </TouchableOpacity>
           </View>
         </Card>
@@ -135,10 +134,16 @@ export default function OrdersScreen() {
   if (!isAuthenticated) {
     return (
       <SafeAreaView style={styles.container} edges={["top"]}>
-        <TopBar />
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => router.back()}>
+            <Ionicons name="arrow-back" size={24} color="#111827" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>My Orders</Text>
+          <View style={{ width: 24 }} />
+        </View>
 
         <View style={styles.emptyContainer}>
-          <Ionicons name="receipt-outline" size={80} color="#4a4a4a" />
+          <Ionicons name="receipt-outline" size={80} color="#D1D5DB" />
           <Text style={styles.emptyTitle}>Login to view orders</Text>
           <Text style={styles.emptySubtitle}>
             Track your order history and status
@@ -156,7 +161,14 @@ export default function OrdersScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={["top"]}>
-      <TopBar />
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => router.back()}>
+          <Ionicons name="arrow-back" size={24} color="#111827" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>My Orders</Text>
+        <View style={{ width: 24 }} />
+      </View>
 
       {/* Status Filter */}
       <View style={styles.filterContainer}>
@@ -190,7 +202,7 @@ export default function OrdersScreen() {
       {/* Orders List */}
       {orders.length === 0 ? (
         <View style={styles.emptyOrders}>
-          <Ionicons name="receipt-outline" size={64} color="#4a4a4a" />
+          <Ionicons name="receipt-outline" size={64} color="#D1D5DB" />
           <Text style={styles.emptyOrdersTitle}>No orders found</Text>
           <Text style={styles.emptyOrdersSubtitle}>
             {selectedStatus === "ALL"
@@ -224,12 +236,28 @@ export default function OrdersScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#FFFFFF", // White
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 16,
+    backgroundColor: "#FFFFFF",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#F3F4F6",
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#111827",
+    flex: 1,
+    textAlign: "center",
   },
   filterContainer: {
-    backgroundColor: "#121212",
+    backgroundColor: "#FFFFFF",
     borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    borderBottomColor: "#F3F4F6",
   },
   filterList: {
     paddingHorizontal: 16,
@@ -239,28 +267,37 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F3F4F6", // Light Gray
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#E5E7EB",
     marginRight: 8,
   },
   filterButtonActive: {
-    backgroundColor: "#8b5cf6",
-    borderColor: "#8b5cf6",
+    backgroundColor: "#111827", // Charcoal
+    borderColor: "#111827",
   },
   filterText: {
     fontSize: 12,
     fontWeight: "600",
-    color: "#a0a0a0",
+    color: "#6B7280", // Gray
   },
   filterTextActive: {
-    color: "#ffffff",
+    color: "#FFFFFF",
   },
   ordersList: {
     padding: 16,
   },
   orderCard: {
     marginBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+    padding: 16,
   },
   orderHeader: {
     flexDirection: "row",
@@ -274,13 +311,13 @@ const styles = StyleSheet.create({
   orderNumber: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
     marginBottom: 4,
     fontFamily: "monospace",
   },
   orderDate: {
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#6B7280", // Gray
   },
   statusBadge: {
     paddingHorizontal: 12,
@@ -299,17 +336,17 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#F3F4F6",
     marginBottom: 12,
   },
   itemsCount: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
   },
   orderTotal: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#8b5cf6",
+    color: "#111827", // Charcoal or Accent Color?
   },
   trackingRow: {
     flexDirection: "row",
@@ -319,7 +356,7 @@ const styles = StyleSheet.create({
   },
   trackingText: {
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#6B7280",
     fontFamily: "monospace",
   },
   orderFooter: {
@@ -334,48 +371,52 @@ const styles = StyleSheet.create({
   viewButtonText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#8b5cf6",
+    color: "#111827", // Charcoal
   },
   emptyContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     padding: 32,
+    backgroundColor: "#FFFFFF",
   },
   emptyTitle: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     marginTop: 24,
   },
   emptySubtitle: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
     marginTop: 8,
     textAlign: "center",
   },
   actionButton: {
     marginTop: 24,
+    backgroundColor: "#111827",
   },
   emptyOrders: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     padding: 48,
+    backgroundColor: "#FFFFFF",
   },
   emptyOrdersTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     marginTop: 16,
   },
   emptyOrdersSubtitle: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
     marginTop: 8,
     textAlign: "center",
   },
   browseButton: {
     marginTop: 24,
+    backgroundColor: "#111827",
   },
 });

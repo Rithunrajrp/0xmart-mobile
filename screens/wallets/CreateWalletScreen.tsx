@@ -1,30 +1,29 @@
+import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
+    Alert,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { Card } from "../../components/ui/Card";
+import api, { NETWORK_DISPLAY_NAMES } from "../../api";
 import { Button } from "../../components/ui/Button";
-import { NetworkType, StablecoinType } from "../../types";
-import { NETWORK_DISPLAY_NAMES } from "../../api";
-import api from "../../api";
-import { useUserStore } from "../../store/user-store";
+import { Card } from "../../components/ui/Card";
 import { useAuthStore } from "../../store/auth-store";
+import { useUserStore } from "../../store/user-store";
+import { NetworkType, StablecoinType } from "../../types";
 import {
-  L2_NETWORKS,
-  NETWORK_CONFIG,
-  isStablecoinSupportedOnNetwork,
-  getStablecoinsForNetwork,
-  getAllStablecoins,
+    L2_NETWORKS,
+    NETWORK_CONFIG,
+    getAllStablecoins,
+    getStablecoinsForNetwork,
+    isStablecoinSupportedOnNetwork,
 } from "../../utils/network-config";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Mobile apps can ONLY create wallets on L2 networks (lower gas fees)
 const NETWORKS: NetworkType[] = L2_NETWORKS;
@@ -145,7 +144,7 @@ export default function CreateWalletScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#ffffff" />
+          <Ionicons name="arrow-back" size={24} color="#111827" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Create Wallet</Text>
         <View style={{ width: 24 }} />
@@ -235,7 +234,7 @@ export default function CreateWalletScreen() {
                     <Ionicons
                       name="git-network"
                       size={20}
-                      color={selectedNetwork === network ? "#8b5cf6" : "#6a6a6a"}
+                      color={selectedNetwork === network ? "#8b5cf6" : "#6B7280"}
                     />
                     <View>
                       <Text
@@ -315,21 +314,21 @@ export default function CreateWalletScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#FFFFFF", // White
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     padding: 16,
-    backgroundColor: "#121212",
-    borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    backgroundColor: "#FFFFFF",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#E5E7EB",
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
   },
   content: {
     flex: 1,
@@ -337,9 +336,11 @@ const styles = StyleSheet.create({
   },
   infoCard: {
     marginBottom: 24,
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F9FAFB", // Light Gray
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#E5E7EB",
+    borderRadius: 12,
+    padding: 16,
   },
   infoHeader: {
     flexDirection: "row",
@@ -350,11 +351,11 @@ const styles = StyleSheet.create({
   infoTitle: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
   },
   infoText: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280", // Gray
     lineHeight: 20,
   },
   section: {
@@ -369,7 +370,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
   },
   l2Badge: {
     backgroundColor: "#8b5cf6",
@@ -385,13 +386,15 @@ const styles = StyleSheet.create({
   },
   l2InfoCard: {
     marginBottom: 12,
-    backgroundColor: "#1e1e3e",
+    backgroundColor: "#F3E8FF", // Purple 100
     borderWidth: 1,
-    borderColor: "#8b5cf6",
+    borderColor: "#D8B4FE", // Purple 300
+    borderRadius: 8,
+    padding: 12,
   },
   l2InfoText: {
     fontSize: 12,
-    color: "#c4b5fd",
+    color: "#6B21A8", // Purple 800
     lineHeight: 18,
   },
   optionsGrid: {
@@ -401,19 +404,26 @@ const styles = StyleSheet.create({
   },
   optionCard: {
     width: "48%",
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#FFFFFF",
     borderRadius: 12,
     padding: 16,
-    borderWidth: 2,
-    borderColor: "#2a2a2a",
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    // Shadow
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
   },
   optionCardSelected: {
     borderColor: "#8b5cf6",
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F5F3FF", // Light Purple
+    borderWidth: 2,
   },
   optionCardDisabled: {
-    opacity: 0.4,
-    backgroundColor: "#1a1a1a",
+    opacity: 0.5,
+    backgroundColor: "#F9FAFB", // Gray 50
+    borderColor: "#E5E7EB",
   },
   optionContent: {
     alignItems: "center",
@@ -439,34 +449,39 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   coinIconDisabled: {
-    backgroundColor: "#4a4a4a",
+    backgroundColor: "#E5E7EB", // Gray 200
   },
   optionText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
   },
   optionTextDisabled: {
-    color: "#6a6a6a",
+    color: "#9CA3AF", // Gray 400
   },
   notSupportedText: {
     fontSize: 10,
-    color: "#6a6a6a",
+    color: "#EF4444", // Red 500
     marginTop: 4,
   },
   networkList: {
     gap: 8,
   },
   networkCard: {
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#FFFFFF",
     borderRadius: 12,
     padding: 16,
-    borderWidth: 2,
-    borderColor: "#2a2a2a",
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 1,
   },
   networkCardSelected: {
     borderColor: "#8b5cf6",
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F5F3FF",
+    borderWidth: 2,
   },
   networkContent: {
     flexDirection: "row",
@@ -481,23 +496,28 @@ const styles = StyleSheet.create({
   networkName: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
   },
   networkNameSelected: {
-    color: "#ffffff",
+    color: "#8b5cf6", // Purple 500
   },
   networkDescription: {
     fontSize: 12,
-    color: "#6a6a6a",
+    color: "#6B7280",
     marginTop: 2,
   },
   summaryCard: {
     marginBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    borderRadius: 12,
+    padding: 16,
   },
   summaryTitle: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     marginBottom: 16,
   },
   summaryRow: {
@@ -507,23 +527,25 @@ const styles = StyleSheet.create({
   },
   summaryLabel: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
   },
   summaryValue: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
   },
   divider: {
     height: 1,
-    backgroundColor: "#2a2a2a",
+    backgroundColor: "#E5E7EB",
     marginVertical: 8,
   },
   notesCard: {
     marginBottom: 16,
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F0FDF4", // Green 50
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#86EFAC", // Green 300
+    borderRadius: 12,
+    padding: 16,
   },
   notesHeader: {
     flexDirection: "row",
@@ -534,15 +556,16 @@ const styles = StyleSheet.create({
   notesTitle: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#166534", // Green 800
   },
   noteText: {
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#15803D", // Green 700
     marginBottom: 6,
     lineHeight: 18,
   },
   createButton: {
     marginBottom: 16,
+    backgroundColor: "#111827",
   },
 });

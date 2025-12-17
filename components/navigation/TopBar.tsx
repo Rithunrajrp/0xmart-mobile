@@ -2,12 +2,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter, useSegments } from "expo-router";
 import React, { useState } from "react";
 import {
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    Image,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from "react-native";
 import { useCartStore } from "../../store/cart-store";
 
@@ -100,11 +100,11 @@ export function TopBar({ hideSearch }: TopBarProps) {
       {!shouldHideSearch && (
         <View style={styles.searchContainer}>
           <View style={styles.searchBar}>
-            <Ionicons name="search-outline" size={20} color="#a0a0a0" />
+            <Ionicons name="search-outline" size={20} color="#4B5563" />
             <TextInput
               style={styles.searchInput}
               placeholder="Search products..."
-              placeholderTextColor="#a0a0a0"
+              placeholderTextColor="#9CA3AF"
               value={searchQuery}
               onChangeText={setSearchQuery}
               onSubmitEditing={handleSearch}
@@ -112,7 +112,7 @@ export function TopBar({ hideSearch }: TopBarProps) {
             />
             {searchQuery.length > 0 && (
               <TouchableOpacity onPress={() => setSearchQuery("")}>
-                <Ionicons name="close-circle" size={20} color="#a0a0a0" />
+                <Ionicons name="close-circle" size={20} color="#4B5563" />
               </TouchableOpacity>
             )}
           </View>
@@ -155,9 +155,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: "#121212",
-    borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    backgroundColor: "#111827", // Charcoal Black for Logo visibility
+    borderBottomWidth: 0, // Semantic header
+    // borderBottomColor: "#2a2a2a",
   },
   logo: {
     width: 100,
@@ -182,6 +182,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 4,
+    borderWidth: 1,
+    borderColor: "#111827", // Match header bg
   },
   badgeText: {
     color: "#ffffff",
@@ -195,33 +197,27 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     paddingHorizontal: 16,
   },
-  // searchContainer: {
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  //   backgroundColor: "#1a1a1a",
-  //   borderRadius: 12,
-  //   borderWidth: 1,
-  //   borderColor: "#2a2a2a",
-  //   paddingHorizontal: 16,
-  //   paddingVertical: 12,
-  //   gap: 12,
-  // },
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: "#ffffff",
+    color: "#111827", // Dark Text
+    fontFamily: 'Inter-Regular',
   },
   searchContainer: {
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingTop: 12,
+    paddingBottom: 20, // Increased space below search bar
+    backgroundColor: "#FFFFFF", // White background for the search strip
   },
   searchBar: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F3F4F6", // Light Gray input
     borderRadius: 12,
     paddingHorizontal: 12,
     paddingVertical: 10,
     gap: 8,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
   },
 });

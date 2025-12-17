@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  ActivityIndicator,
-  Image,
+    ActivityIndicator,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useRouter } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
-import { TopBar } from "../../components/navigation/TopBar";
-import { Card } from "../../components/ui/Card";
 import api from "../../api";
+import { TopBar } from "../../components/navigation/TopBar";
 
 interface Collection {
   category: string;
@@ -54,12 +52,27 @@ export default function CollectionScreen() {
     router.push(`/collection/${encodeURIComponent(category)}`);
   };
 
+  const getCategoryIcon = (category: string): keyof typeof Ionicons.glyphMap => {
+    const lowerCat = category.toLowerCase();
+    if (lowerCat.includes('electronic') || lowerCat.includes('tech')) return 'hardware-chip-outline';
+    if (lowerCat.includes('cloth') || lowerCat.includes('fashion') || lowerCat.includes('wear')) return 'shirt-outline';
+    if (lowerCat.includes('home') || lowerCat.includes('living')) return 'home-outline';
+    if (lowerCat.includes('beauty') || lowerCat.includes('health')) return 'sparkles-outline';
+    if (lowerCat.includes('sport') || lowerCat.includes('fitness')) return 'basketball-outline';
+    if (lowerCat.includes('toy') || lowerCat.includes('game')) return 'game-controller-outline';
+    if (lowerCat.includes('book') || lowerCat.includes('read')) return 'book-outline';
+    if (lowerCat.includes('watch') || lowerCat.includes('jewel')) return 'watch-outline';
+    if (lowerCat.includes('bag') || lowerCat.includes('luggage')) return 'briefcase-outline';
+    if (lowerCat.includes('shoe') || lowerCat.includes('footwear')) return 'footsteps-outline';
+    return 'grid-outline';
+  };
+
   if (loading) {
     return (
       <SafeAreaView style={styles.container} edges={["top"]}>
         <TopBar />
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#8b5cf6" />
+          <ActivityIndicator size="large" color="#111827" />
         </View>
       </SafeAreaView>
     );
@@ -69,11 +82,7 @@ export default function CollectionScreen() {
     <SafeAreaView style={styles.container} edges={["top"]}>
       {/* Header */}
       <View style={styles.headerBar}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#ffffff" />
-        </TouchableOpacity>
         <Text style={styles.headerTitle}>Collections</Text>
-        <View style={{ width: 24 }} />
       </View>
 
       <ScrollView style={styles.content}>
@@ -91,13 +100,15 @@ export default function CollectionScreen() {
               onPress={() => handleCollectionPress(collection.category)}
               activeOpacity={0.7}
             >
-              <Card style={styles.card}>
+              <View style={styles.cardContent}>
                 <View style={styles.iconContainer}>
-                  <Ionicons name="grid" size={40} color="#8b5cf6" />
+                  <Ionicons name={getCategoryIcon(collection.category)} size={28} color="#111827" />
                 </View>
                 <Text style={styles.collectionName}>{collection.category}</Text>
-                <Ionicons name="arrow-forward" size={20} color="#a0a0a0" />
-              </Card>
+                <View style={styles.arrowContainer}>
+                  <Ionicons name="arrow-forward" size={20} color="#111827" />
+                </View>
+              </View>
             </TouchableOpacity>
           ))}
         </View>
@@ -109,22 +120,30 @@ export default function CollectionScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#FFFFFF",
   },
   headerBar: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     padding: 16,
-    backgroundColor: "#121212",
+    backgroundColor: "#FFFFFF",
     borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    borderBottomColor: "#F3F4F6",
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    backgroundColor: "#F9FAFB",
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#ffffff",
-    flex: 1,
+    color: "#111827",
+    fontFamily: 'PlayfairDisplay-Bold',
     textAlign: "center",
   },
   content: {
@@ -134,42 +153,64 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#FFFFFF",
   },
   header: {
-    padding: 20,
-    paddingTop: 16,
-    paddingBottom: 8,
+    padding: 24,
+    paddingBottom: 16,
   },
   subtitle: {
-    fontSize: 14,
-    color: "#a0a0a0",
+    fontSize: 16,
+    color: "#6B7280",
+    fontFamily: 'Inter-Regular',
   },
   grid: {
-    padding: 16,
+    padding: 24,
+    paddingTop: 8,
     gap: 16,
   },
   collectionCard: {
-    marginBottom: 16,
+    marginBottom: 0,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
   },
-  card: {
+  cardContent: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 20,
+    padding: 16,
     gap: 16,
   },
   iconContainer: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    backgroundColor: "#1e1e1e",
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: "#F9FAFB",
     alignItems: "center",
     justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
   },
   collectionName: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
     textTransform: "capitalize",
+    fontFamily: 'Inter-SemiBold',
+  },
+  arrowContainer: {
+    width: 32,
+    height: 32,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F9FAFB",
+    borderRadius: 16,
   },
 });

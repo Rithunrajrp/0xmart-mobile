@@ -1,19 +1,19 @@
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
-  ActivityIndicator,
+    ActivityIndicator,
+    Alert,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { Card } from "../../components/ui/Card";
-import { Button } from "../../components/ui/Button";
 import { TopBar } from "../../components/navigation/TopBar";
+import { Button } from "../../components/ui/Button";
+import { Card } from "../../components/ui/Card";
 import { useAuthStore } from "../../store/auth-store";
 import { useUserStore } from "../../store/user-store";
 
@@ -70,7 +70,7 @@ export default function ProfileScreen() {
       <SafeAreaView style={styles.container} edges={["top"]}>
         <TopBar />
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#8b5cf6" />
+          <ActivityIndicator size="large" color="#111827" />
         </View>
       </SafeAreaView>
     );
@@ -83,7 +83,7 @@ export default function ProfileScreen() {
 
         <View style={styles.emptyContainer}>
           <View style={styles.avatarPlaceholder}>
-            <Ionicons name="person" size={48} color="#6a6a6a" />
+            <Ionicons name="person" size={48} color="#9CA3AF" />
           </View>
           <Text style={styles.emptyTitle}>Not logged in</Text>
           <Text style={styles.emptySubtitle}>
@@ -128,7 +128,7 @@ export default function ProfileScreen() {
         <Card style={styles.profileCard}>
           <View style={styles.avatarContainer}>
             <View style={styles.avatar}>
-              <Ionicons name="person" size={40} color="#ffffff" />
+              <Ionicons name="person" size={40} color="#111827" />
             </View>
           </View>
 
@@ -260,13 +260,13 @@ function MenuItem({
   return (
     <TouchableOpacity style={styles.menuItem} onPress={onPress} activeOpacity={0.7}>
       <View style={styles.menuIcon}>
-        <Ionicons name={icon} size={24} color="#ffffff" />
+        <Ionicons name={icon} size={24} color="#111827" />
       </View>
       <View style={styles.menuContent}>
         <Text style={styles.menuTitle}>{title}</Text>
         <Text style={styles.menuSubtitle}>{subtitle}</Text>
       </View>
-      <Ionicons name="chevron-forward" size={20} color="#6a6a6a" />
+      <Ionicons name="chevron-forward" size={20} color="#9CA3AF" />
     </TouchableOpacity>
   );
 }
@@ -279,7 +279,7 @@ function Divider() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#FFFFFF", // White
   },
   content: {
     flex: 1,
@@ -288,6 +288,14 @@ const styles = StyleSheet.create({
     margin: 16,
     alignItems: "center",
     paddingVertical: 24,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 24,
+    shadowColor: "#000",
+    shadowOpacity: 0.1, // Softer shadow
+    shadowRadius: 10,
+    elevation: 4,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
   },
   avatarContainer: {
     marginBottom: 16,
@@ -296,9 +304,11 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: "#8b5cf6",
+    backgroundColor: "#F3F4F6", // Light Gray
     alignItems: "center",
     justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
   },
   userInfo: {
     alignItems: "center",
@@ -307,17 +317,20 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
     marginBottom: 4,
+    fontFamily: 'PlayfairDisplay-Bold',
   },
   userEmail: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280", // Gray
     marginBottom: 4,
+    fontFamily: 'Inter-Regular',
   },
   userPhone: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
+    fontFamily: 'Inter-Regular',
   },
   badges: {
     flexDirection: "row",
@@ -327,17 +340,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 4,
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F9FAFB", // Very Light Gray
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#E5E7EB",
   },
   badgeText: {
     fontSize: 12,
     fontWeight: "600",
-    color: "#a0a0a0",
+    color: "#6B7280",
     textTransform: "uppercase",
   },
   menuSection: {
@@ -346,14 +359,24 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#a0a0a0",
+    color: "#6B7280", // Gray
     textTransform: "uppercase",
     marginLeft: 16,
     marginBottom: 12,
+    fontFamily: 'Inter-Medium',
   },
   menuCard: {
     marginHorizontal: 16,
     padding: 0,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+    overflow: "hidden",
   },
   menuItem: {
     flexDirection: "row",
@@ -364,7 +387,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: "#8b5cf6",
+    backgroundColor: "#F3F4F6", // Light Gray
     alignItems: "center",
     justifyContent: "center",
     marginRight: 12,
@@ -375,16 +398,16 @@ const styles = StyleSheet.create({
   menuTitle: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
     marginBottom: 2,
   },
   menuSubtitle: {
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#6B7280",
   },
   divider: {
     height: 1,
-    backgroundColor: "#2a2a2a",
+    backgroundColor: "#F3F4F6",
     marginLeft: 68,
   },
   logoutButton: {
@@ -395,12 +418,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 32,
+    backgroundColor: "#FFFFFF",
   },
   avatarPlaceholder: {
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F3F4F6",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 24,
@@ -408,18 +432,19 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     marginBottom: 8,
   },
   emptySubtitle: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
     textAlign: "center",
     marginBottom: 24,
   },
   loginButton: {
     width: "100%",
     marginBottom: 12,
+    backgroundColor: "#111827",
   },
   guestButton: {
     width: "100%",
@@ -428,13 +453,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#FFFFFF",
   },
   errorBanner: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#FEF2F2", // Red 50
     borderLeftWidth: 3,
-    borderLeftColor: "#ef4444",
+    borderLeftColor: "#EF4444",
     padding: 12,
     marginHorizontal: 16,
     marginVertical: 8,
@@ -444,17 +470,17 @@ const styles = StyleSheet.create({
   errorText: {
     flex: 1,
     fontSize: 14,
-    color: "#ffffff",
+    color: "#B91C1C", // Red 700
   },
   retryButton: {
     paddingHorizontal: 12,
     paddingVertical: 6,
-    backgroundColor: "#8b5cf6",
+    backgroundColor: "#F3F4F6",
     borderRadius: 6,
   },
   retryText: {
     fontSize: 12,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
   },
 });

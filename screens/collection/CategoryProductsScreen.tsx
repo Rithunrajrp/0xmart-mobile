@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  RefreshControl,
-} from "react-native";
-import { useRouter, useLocalSearchParams } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import {
+    Image,
+    RefreshControl,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import api from "../../api";
 import { Card } from "../../components/ui/Card";
 import { useCartStore } from "../../store/cart-store";
 import { useFavoritesStore } from "../../store/favorites-store";
 import { Product } from "../../types";
-import api from "../../api";
 
 export default function CategoryProductsScreen() {
   const router = useRouter();
@@ -64,7 +64,7 @@ export default function CategoryProductsScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#ffffff" />
+          <Ionicons name="arrow-back" size={24} color="#111827" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{category}</Text>
         <View style={{ width: 24 }} />
@@ -76,13 +76,13 @@ export default function CategoryProductsScreen() {
           <RefreshControl
             refreshing={loading}
             onRefresh={loadProducts}
-            tintColor="#8b5cf6"
+            tintColor="#111827"
           />
         }
       >
         {products.length === 0 && !loading ? (
           <View style={styles.emptyContainer}>
-            <Ionicons name="cube-outline" size={80} color="#4a4a4a" />
+            <Ionicons name="cube-outline" size={80} color="#D1D5DB" />
             <Text style={styles.emptyTitle}>No products found</Text>
             <Text style={styles.emptySubtitle}>
               Check back later for new items
@@ -111,7 +111,7 @@ export default function CategoryProductsScreen() {
                         />
                       ) : (
                         <View style={styles.placeholderImage}>
-                          <Ionicons name="image-outline" size={32} color="#6a6a6a" />
+                          <Ionicons name="image-outline" size={32} color="#9CA3AF" />
                         </View>
                       )}
                     </View>
@@ -164,21 +164,21 @@ export default function CategoryProductsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#FFFFFF",
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     padding: 16,
-    backgroundColor: "#121212",
-    borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    backgroundColor: "#FFFFFF",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#F3F4F6",
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     flex: 1,
     textAlign: "center",
     textTransform: "capitalize",
@@ -191,6 +191,11 @@ const styles = StyleSheet.create({
   },
   itemCard: {
     marginBottom: 12,
+    backgroundColor: "#FFFFFF",
+    borderColor: "#F3F4F6",
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    borderWidth: 1,
   },
   itemContent: {
     flexDirection: "row",
@@ -201,7 +206,7 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 8,
     overflow: "hidden",
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F3F4F6",
   },
   itemImage: {
     width: "100%",
@@ -220,22 +225,22 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827",
     marginBottom: 4,
   },
   itemCategory: {
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#6B7280",
     marginBottom: 4,
   },
   itemPrice: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#8b5cf6",
+    color: "#111827",
   },
   lowStockText: {
     fontSize: 11,
-    color: "#ef4444",
+    color: "#dc2626",
     marginTop: 4,
   },
   favoriteButton: {
@@ -247,16 +252,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 32,
     minHeight: 400,
+    backgroundColor: "#FFFFFF",
   },
   emptyTitle: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     marginTop: 24,
   },
   emptySubtitle: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
     marginTop: 8,
     textAlign: "center",
   },

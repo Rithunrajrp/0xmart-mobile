@@ -1,23 +1,23 @@
+import { Ionicons } from "@expo/vector-icons";
+import * as Clipboard from "expo-clipboard";
+import { useFocusEffect, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  RefreshControl,
-  Alert,
+    Alert,
+    RefreshControl,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { useRouter, useFocusEffect } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { Card } from "../../components/ui/Card";
-import { Button } from "../../components/ui/Button";
-import { useUserStore } from "../../store/user-store";
-import { useAuthStore } from "../../store/auth-store";
-import { Wallet } from "../../types";
 import { NETWORK_DISPLAY_NAMES } from "../../api";
-import * as Clipboard from "expo-clipboard";
+import { Button } from "../../components/ui/Button";
+import { Card } from "../../components/ui/Card";
+import { useAuthStore } from "../../store/auth-store";
+import { useUserStore } from "../../store/user-store";
+import { Wallet } from "../../types";
 
 export default function WalletsScreen() {
   const router = useRouter();
@@ -97,9 +97,14 @@ export default function WalletsScreen() {
     <SafeAreaView style={styles.container} edges={["top"]}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>My Wallets</Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <TouchableOpacity onPress={() => router.back()} style={{marginRight: 10}}>
+            <Ionicons name="arrow-back" size={24} color="#111827" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>My Wallets</Text>
+        </View>
         <TouchableOpacity onPress={() => router.push("/wallets/create")}>
-          <Ionicons name="add-circle" size={28} color="#8b5cf6" />
+          <Ionicons name="add-circle" size={28} color="#111827" />
         </TouchableOpacity>
       </View>
 
@@ -131,7 +136,7 @@ export default function WalletsScreen() {
         {/* Wallets List */}
         {wallets.length === 0 ? (
           <View style={styles.emptyWallets}>
-            <Ionicons name="wallet-outline" size={64} color="#6a6a6a" />
+            <Ionicons name="wallet-outline" size={64} color="#D1D5DB" />
             <Text style={styles.emptyWalletsTitle}>No wallets yet</Text>
             <Text style={styles.emptyWalletsSubtitle}>
               Create your first wallet to start shopping
@@ -160,7 +165,7 @@ export default function WalletsScreen() {
                     {/* Header */}
                     <View style={styles.walletHeader}>
                       <View style={styles.walletIcon}>
-                        <Ionicons name="wallet" size={24} color="#ffffff" />
+                        <Ionicons name="wallet" size={24} color="#111827" />
                       </View>
                       <View style={styles.walletInfo}>
                         <Text style={styles.walletCoin}>
@@ -207,7 +212,7 @@ export default function WalletsScreen() {
                         <TouchableOpacity
                           onPress={() => handleCopyAddress(wallet.depositAddress)}
                         >
-                          <Ionicons name="copy-outline" size={20} color="#8b5cf6" />
+                          <Ionicons name="copy-outline" size={20} color="#111827" />
                         </TouchableOpacity>
                       </View>
                     </View>
@@ -243,7 +248,7 @@ export default function WalletsScreen() {
         {/* Info */}
         <Card style={styles.infoCard}>
           <View style={styles.infoRow}>
-            <Ionicons name="information-circle" size={20} color="#8b5cf6" />
+            <Ionicons name="information-circle" size={20} color="#6B7280" />
             <Text style={styles.infoText}>
               Your wallets are securely generated and managed. Each wallet has a
               unique deposit address for the selected network.
@@ -260,21 +265,21 @@ export default function WalletsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#FFFFFF", // White
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     padding: 16,
-    backgroundColor: "#121212",
-    borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    backgroundColor: "#FFFFFF",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#E5E7EB",
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
   },
   content: {
     flex: 1,
@@ -283,23 +288,30 @@ const styles = StyleSheet.create({
     margin: 16,
     alignItems: "center",
     paddingVertical: 24,
-    backgroundColor: "#8b5cf6",
+    backgroundColor: "#111827", // Charcoal
+    borderRadius: 24,
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowRadius: 10,
+    elevation: 6,
   },
   balanceLabel: {
     fontSize: 14,
-    color: "#ffffff",
+    color: "#9CA3AF", // Gray 400
     opacity: 0.9,
     marginBottom: 8,
+    fontFamily: 'Inter-Medium',
   },
   balanceValue: {
     fontSize: 48,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#FFFFFF",
     marginBottom: 4,
+    fontFamily: 'PlayfairDisplay-Bold',
   },
   balanceSubtext: {
     fontSize: 14,
-    color: "#ffffff",
+    color: "#D1D5DB", // Gray 300
     opacity: 0.9,
   },
   walletsList: {
@@ -308,6 +320,15 @@ const styles = StyleSheet.create({
   },
   walletCard: {
     marginBottom: 0,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#F3F4F6", // Light Gray
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+    padding: 16,
   },
   walletHeader: {
     flexDirection: "row",
@@ -318,7 +339,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: "#8b5cf6",
+    backgroundColor: "#F3F4F6", // Light Gray
     alignItems: "center",
     justifyContent: "center",
     marginRight: 12,
@@ -329,12 +350,12 @@ const styles = StyleSheet.create({
   walletCoin: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
     marginBottom: 2,
   },
   walletNetwork: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280", // Gray
   },
   walletBalance: {
     flexDirection: "row",
@@ -343,65 +364,65 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingBottom: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#2a2a2a",
+    borderBottomColor: "#F3F4F6",
   },
   balanceAmount: {
     fontSize: 28,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
   },
   lockedBalance: {
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#6B7280",
     marginTop: 4,
   },
   availableBadge: {
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F9FAFB", // Very Light Gray
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 8,
     alignItems: "flex-end",
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#E5E7EB",
   },
   availableText: {
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#6B7280",
     marginBottom: 2,
   },
   availableAmount: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
   },
   addressContainer: {
     marginBottom: 16,
   },
   addressLabel: {
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#6B7280",
     marginBottom: 8,
   },
   addressRow: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#121212",
+    backgroundColor: "#F9FAFB",
     padding: 12,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#E5E7EB",
   },
   addressText: {
     flex: 1,
     fontSize: 12,
     fontFamily: "monospace",
-    color: "#ffffff",
+    color: "#111827",
     marginRight: 8,
   },
   walletActions: {
     flexDirection: "row",
     borderTopWidth: 1,
-    borderTopColor: "#2a2a2a",
+    borderTopColor: "#F3F4F6",
     paddingTop: 12,
   },
   actionButton: {
@@ -413,28 +434,29 @@ const styles = StyleSheet.create({
   },
   actionDivider: {
     width: 1,
-    backgroundColor: "#2a2a2a",
+    backgroundColor: "#E5E7EB",
   },
   actionText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#111827", // Charcoal
   },
   emptyContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     padding: 32,
+    backgroundColor: "#FFFFFF",
   },
   emptyTitle: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     marginTop: 24,
   },
   emptySubtitle: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280", // Gray
     marginTop: 8,
     textAlign: "center",
   },
@@ -445,17 +467,18 @@ const styles = StyleSheet.create({
   emptyWalletsTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#ffffff",
+    color: "#111827",
     marginTop: 16,
   },
   emptyWalletsSubtitle: {
     fontSize: 14,
-    color: "#a0a0a0",
+    color: "#6B7280",
     marginTop: 8,
     textAlign: "center",
   },
   createButton: {
     marginTop: 24,
+    backgroundColor: "#111827",
   },
   createNewButton: {
     marginHorizontal: 16,
@@ -463,9 +486,9 @@ const styles = StyleSheet.create({
   },
   infoCard: {
     marginHorizontal: 16,
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#F9FAFB", // Light Gray
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#E5E7EB",
   },
   infoRow: {
     flexDirection: "row",
@@ -474,7 +497,7 @@ const styles = StyleSheet.create({
   infoText: {
     flex: 1,
     fontSize: 12,
-    color: "#a0a0a0",
+    color: "#6B7280",
     lineHeight: 18,
   },
 });

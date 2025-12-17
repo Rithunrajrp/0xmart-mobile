@@ -146,6 +146,7 @@ export interface Product {
   subcategory?: string;
   brand?: string;
   tags?: string[];
+  specifications?: any;
   status: ProductStatus;
   stock: number;
   weight?: number;
@@ -228,6 +229,7 @@ export interface OrderItem {
   totalPrice: string;
   stablecoinType: StablecoinType;
   product?: Product;
+  price?: string; // Added for compatibility
 }
 
 export interface ShippingAddress {
@@ -239,6 +241,7 @@ export interface ShippingAddress {
   state?: string;
   postalCode: string;
   country: string;
+  phoneNumber?: string; // Added for compatibility
 }
 
 export interface Order {
@@ -253,6 +256,10 @@ export interface Order {
   total: string;
   shippingAddress: ShippingAddress;
   trackingNumber?: string;
+  trackingUrl?: string; // Added
+  shippingFee?: string; // Added
+  transactionHash?: string; // Added
+  network?: string; // Added
   notes?: string;
   metadata?: any;
   createdAt: string;

@@ -1,27 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Share,
-  ActivityIndicator,
-  Modal,
-  Animated,
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
-import * as Haptics from 'expo-haptics';
-import * as Clipboard from 'expo-clipboard';
-import { useRewardsStore } from '@/store/rewards-store';
-import { TIER_CONFIGS, getProgressToNextTier } from '@/config/tier-config';
-import { MembershipTier } from '@/types/rewards';
-import TierUpgradeModal from '@/components/rewards/TierUpgradeModal';
+import ExclusiveDropsSection from '@/components/rewards/ExclusiveDropsSection';
+import MysteryBoxGrid from '@/components/rewards/MysteryBoxGrid';
 import PurchaseRewardsTab from '@/components/rewards/PurchaseRewardsTab';
 import ReferralRewardsTab from '@/components/rewards/ReferralRewardsTab';
 import SubscriptionRewardsTab from '@/components/rewards/SubscriptionRewardsTab';
-import MysteryBoxGrid from '@/components/rewards/MysteryBoxGrid';
-import ExclusiveDropsSection from '@/components/rewards/ExclusiveDropsSection';
+import TierUpgradeModal from '@/components/rewards/TierUpgradeModal';
+import { TIER_CONFIGS, getProgressToNextTier } from '@/config/tier-config';
+import { useRewardsStore } from '@/store/rewards-store';
+import { Ionicons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
+import { LinearGradient } from 'expo-linear-gradient';
+import React, { useEffect, useState } from 'react';
+import {
+    ActivityIndicator,
+    Animated,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
 
 type TabType = 'purchase' | 'referral' | 'subscription';
 
@@ -76,7 +72,7 @@ export default function RewardsScreen() {
   };
 
   return (
-    <View className="flex-1 bg-gray-950">
+    <View className="flex-1 bg-white">
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
@@ -108,13 +104,13 @@ export default function RewardsScreen() {
               }}
             >
               <View className="bg-white/20 backdrop-blur-lg rounded-full px-8 py-4 border-2 border-white/40">
-                <Text className="text-white text-2xl font-bold tracking-wider">
+                <Text className="text-white text-2xl font-bold tracking-wider font-PlayfairDisplay-Bold">
                   {tierConfig.name}
                 </Text>
               </View>
             </Animated.View>
 
-            <Text className="text-white/80 text-sm mt-2 font-medium">
+            <Text className="text-white/90 text-sm mt-2 font-medium font-Inter-Medium">
               Your Current Membership Tier
             </Text>
           </View>
@@ -123,8 +119,8 @@ export default function RewardsScreen() {
           <View className="flex-row justify-around mb-6">
             <View className="items-center">
               <View className="bg-white/20 backdrop-blur-lg rounded-2xl px-6 py-3 border border-white/30">
-                <Text className="text-white/70 text-xs font-semibold mb-1">POINTS</Text>
-                <Text className="text-white text-2xl font-bold">
+                <Text className="text-white/80 text-xs font-semibold mb-1 font-Inter-SemiBold">POINTS</Text>
+                <Text className="text-white text-2xl font-bold font-Inter-Bold">
                   {rewards.currentPoints.toLocaleString()}
                 </Text>
               </View>
@@ -132,8 +128,8 @@ export default function RewardsScreen() {
 
             <View className="items-center">
               <View className="bg-white/20 backdrop-blur-lg rounded-2xl px-6 py-3 border border-white/30">
-                <Text className="text-white/70 text-xs font-semibold mb-1">CREDITS</Text>
-                <Text className="text-white text-2xl font-bold">
+                <Text className="text-white/80 text-xs font-semibold mb-1 font-Inter-SemiBold">CREDITS</Text>
+                <Text className="text-white text-2xl font-bold font-Inter-Bold">
                   {rewards.tokenCredits.toLocaleString()}
                 </Text>
               </View>
@@ -141,14 +137,14 @@ export default function RewardsScreen() {
           </View>
 
           {/* Token Launch Teaser */}
-          <View className="bg-yellow-500/20 backdrop-blur-lg rounded-2xl p-4 border border-yellow-400/40 mb-6">
+          <View className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 border border-white/20 mb-6">
             <View className="flex-row items-center">
-              <Ionicons name="flash" size={20} color="#FBBF24" />
-              <Text className="text-yellow-300 text-sm font-semibold ml-2">
+              <Ionicons name="flash" size={20} color="#FCD34D" />
+              <Text className="text-white text-sm font-semibold ml-2 font-Inter-SemiBold">
                 Credits converting to token soon!
               </Text>
             </View>
-            <Text className="text-white/70 text-xs mt-1">
+            <Text className="text-white/80 text-xs mt-1 font-Inter-Regular">
               Your credits will convert to 0xMart tokens at launch
             </Text>
           </View>
@@ -157,10 +153,10 @@ export default function RewardsScreen() {
           {progress.nextTier && (
             <View>
               <View className="flex-row justify-between items-center mb-2">
-                <Text className="text-white/90 text-sm font-semibold">
+                <Text className="text-white/90 text-sm font-semibold font-Inter-SemiBold">
                   Progress to {TIER_CONFIGS[progress.nextTier].name}
                 </Text>
-                <Text className="text-white/70 text-xs">
+                <Text className="text-white/80 text-xs font-Inter-Regular">
                   ${progress.spendNeeded.toLocaleString()} to go
                 </Text>
               </View>
@@ -173,7 +169,7 @@ export default function RewardsScreen() {
                 />
               </View>
 
-              <Text className="text-white/60 text-xs mt-1 text-right">
+              <Text className="text-white/70 text-xs mt-1 text-right font-Inter-Regular">
                 {progress.progressPercent.toFixed(0)}% complete
               </Text>
             </View>
@@ -183,7 +179,7 @@ export default function RewardsScreen() {
             <View className="bg-white/20 backdrop-blur-lg rounded-2xl p-4 border border-white/40">
               <View className="flex-row items-center justify-center">
                 <Ionicons name="trophy" size={24} color="#FCD34D" />
-                <Text className="text-white text-base font-bold ml-2">
+                <Text className="text-white text-base font-bold ml-2 font-Inter-Bold">
                   Maximum Tier Reached! 🎉
                 </Text>
               </View>
@@ -193,16 +189,16 @@ export default function RewardsScreen() {
 
         {/* Tab Selector */}
         <View className="px-6 mt-6">
-          <View className="bg-gray-900 rounded-2xl p-1 flex-row border border-gray-800">
+          <View className="bg-gray-100 rounded-2xl p-1 flex-row border border-gray-200">
             <TouchableOpacity
               onPress={() => handleTabPress('purchase')}
               className={`flex-1 py-3 rounded-xl ${
-                activeTab === 'purchase' ? 'bg-blue-600' : 'bg-transparent'
+                activeTab === 'purchase' ? 'bg-white shadow-sm' : 'bg-transparent'
               }`}
             >
               <Text
-                className={`text-center font-semibold text-sm ${
-                  activeTab === 'purchase' ? 'text-white' : 'text-gray-400'
+                className={`text-center font-semibold text-sm font-Inter-Medium ${
+                  activeTab === 'purchase' ? 'text-gray-900' : 'text-gray-500'
                 }`}
               >
                 Purchases
@@ -212,12 +208,12 @@ export default function RewardsScreen() {
             <TouchableOpacity
               onPress={() => handleTabPress('referral')}
               className={`flex-1 py-3 rounded-xl ${
-                activeTab === 'referral' ? 'bg-purple-600' : 'bg-transparent'
+                activeTab === 'referral' ? 'bg-white shadow-sm' : 'bg-transparent'
               }`}
             >
               <Text
-                className={`text-center font-semibold text-sm ${
-                  activeTab === 'referral' ? 'text-white' : 'text-gray-400'
+                className={`text-center font-semibold text-sm font-Inter-Medium ${
+                  activeTab === 'referral' ? 'text-gray-900' : 'text-gray-500'
                 }`}
               >
                 Referrals
@@ -227,12 +223,12 @@ export default function RewardsScreen() {
             <TouchableOpacity
               onPress={() => handleTabPress('subscription')}
               className={`flex-1 py-3 rounded-xl ${
-                activeTab === 'subscription' ? 'bg-teal-600' : 'bg-transparent'
+                activeTab === 'subscription' ? 'bg-white shadow-sm' : 'bg-transparent'
               }`}
             >
               <Text
-                className={`text-center font-semibold text-sm ${
-                  activeTab === 'subscription' ? 'text-white' : 'text-gray-400'
+                className={`text-center font-semibold text-sm font-Inter-Medium ${
+                  activeTab === 'subscription' ? 'text-gray-900' : 'text-gray-500'
                 }`}
               >
                 Subscription
@@ -262,14 +258,14 @@ export default function RewardsScreen() {
 
         {/* Mystery Boxes */}
         <View className="px-6 mt-8">
-          <Text className="text-white text-xl font-bold mb-4">Mystery Boxes</Text>
+          <Text className="text-gray-900 text-xl font-bold mb-4 font-PlayfairDisplay-Bold">Mystery Boxes</Text>
           <MysteryBoxGrid boxes={rewards.mysteryBoxes} currentTier={rewards.currentTier} />
         </View>
 
         {/* Exclusive Drops */}
         {tierConfig.exclusiveDrops && (
           <View className="px-6 mt-8">
-            <Text className="text-white text-xl font-bold mb-4">Exclusive Drops</Text>
+            <Text className="text-gray-900 text-xl font-bold mb-4 font-PlayfairDisplay-Bold">Exclusive Drops</Text>
             <ExclusiveDropsSection
               drops={rewards.exclusiveDrops}
               currentTier={rewards.currentTier}
@@ -279,12 +275,12 @@ export default function RewardsScreen() {
 
         {/* Tier Benefits */}
         <View className="px-6 mt-8 mb-6">
-          <Text className="text-white text-xl font-bold mb-4">Your Benefits</Text>
-          <View className="bg-gray-900 rounded-2xl p-5 border border-gray-800">
+          <Text className="text-gray-900 text-xl font-bold mb-4 font-PlayfairDisplay-Bold">Your Benefits</Text>
+          <View className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
             {tierConfig.benefits.map((benefit, index) => (
               <View key={index} className="flex-row items-start mb-3">
                 <Ionicons name="checkmark-circle" size={20} color={tierConfig.color.primary} />
-                <Text className="text-white/80 text-sm ml-3 flex-1">{benefit}</Text>
+                <Text className="text-gray-700 text-sm ml-3 flex-1 font-Inter-Regular">{benefit}</Text>
               </View>
             ))}
           </View>

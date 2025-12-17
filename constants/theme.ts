@@ -10,20 +10,23 @@ const tintColorDark = '#fff';
 
 export const Colors = {
   light: {
-    text: '#0b0b0b',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#5c5c5c',
-    tabIconDefault: '#5c5c5c',
-    tabIconSelected: tintColorLight,
+    text: '#111827', // Charcoal Black
+    background: '#FFFFFF',
+    tint: '#111827',
+    icon: '#4B5563', // Gray 600
+    tabIconDefault: '#9CA3AF', // Gray 400
+    tabIconSelected: '#111827',
+    border: '#E5E7EB',
   },
   dark: {
-    text: '#dedede',
-    background: '#090909',
-    tint: tintColorDark,
-    icon: '#8f8f8f',
-    tabIconDefault: '#8f8f8f',
-    tabIconSelected: tintColorDark,
+    // Forcing light theme aesthetics for "Modern Minimal" look as requested "White / off-white background"
+    text: '#111827',
+    background: '#FFFFFF',
+    tint: '#111827',
+    icon: '#4B5563',
+    tabIconDefault: '#9CA3AF',
+    tabIconSelected: '#111827',
+    border: '#E5E7EB',
   },
 };
 

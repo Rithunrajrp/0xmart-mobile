@@ -1,14 +1,14 @@
+import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  Modal,
-  FlatList,
-  TextInput,
-  StyleSheet,
+    FlatList,
+    Modal,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 
 export interface CountryCode {
   name: string;
@@ -112,7 +112,7 @@ export function CountryCodePicker({
         onPress={() => setModalVisible(true)}
       >
         <Text style={styles.dialCode}>{selectedCountry.dialCode}</Text>
-        <Ionicons name="chevron-down" size={16} color="#6a6a6a" />
+        <Ionicons name="chevron-down" size={16} color="#111827" />
       </TouchableOpacity>
 
       {error && <Text style={styles.error}>{error}</Text>}
@@ -187,9 +187,9 @@ const styles = StyleSheet.create({
   picker: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: "#2a2a2a",
+    borderColor: "#E5E7EB",
     borderRadius: 12,
     paddingHorizontal: 12,
     paddingVertical: 12,
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   },
   dialCode: {
     fontSize: 16,
-    color: "#ffffff",
+    color: "#111827",
     flex: 1,
   },
   error: {

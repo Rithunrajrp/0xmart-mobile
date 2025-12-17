@@ -1,20 +1,20 @@
+import { Ionicons } from "@expo/vector-icons";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  ActivityIndicator,
-  TouchableOpacity,
-  Linking,
+    ActivityIndicator,
+    Linking,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { useRouter, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { Card } from "../../components/ui/Card";
-import { Button } from "../../components/ui/Button";
-import { Order, OrderStatus } from "../../types";
 import api from "../../api";
+import { Button } from "../../components/ui/Button";
+import { Card } from "../../components/ui/Card";
+import { Order, OrderStatus } from "../../types";
 
 export default function OrderDetailScreen() {
   const router = useRouter();
@@ -43,19 +43,19 @@ export default function OrderDetailScreen() {
     switch (status) {
       case "PENDING":
       case "PAYMENT_PENDING":
-        return { bg: "#efefef", text: "#4a4a4a", icon: "time-outline" };
+        return { bg: "#F3F4F6", text: "#6B7280", icon: "time-outline" };
       case "PROCESSING":
       case "CONFIRMED":
-        return { bg: "#f0f0f0", text: "#202020", icon: "checkmark-circle-outline" };
+        return { bg: "#ECFDF5", text: "#059669", icon: "checkmark-circle-outline" };
       case "SHIPPED":
-        return { bg: "#ededed", text: "#1b1b1b", icon: "airplane-outline" };
+        return { bg: "#EFF6FF", text: "#3B82F6", icon: "airplane-outline" };
       case "DELIVERED":
-        return { bg: "#f2f2f2", text: "#2d2d2d", icon: "checkmark-done-outline" };
+        return { bg: "#F0FDF4", text: "#16A34A", icon: "checkmark-done-outline" };
       case "CANCELLED":
       case "REFUNDED":
-        return { bg: "#ececec", text: "#2f2f2f", icon: "close-circle-outline" };
+        return { bg: "#FEF2F2", text: "#DC2626", icon: "close-circle-outline" };
       default:
-        return { bg: "#f2f2f2", text: "#6a6a6a", icon: "help-circle-outline" };
+        return { bg: "#F3F4F6", text: "#6B7280", icon: "help-circle-outline" };
     }
   };
 
@@ -63,7 +63,7 @@ export default function OrderDetailScreen() {
     return (
       <SafeAreaView style={styles.container} edges={["top"]}>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#0f0f0f" />
+          <ActivityIndicator size="large" color="#111827" />
         </View>
       </SafeAreaView>
     );
@@ -74,14 +74,14 @@ export default function OrderDetailScreen() {
       <SafeAreaView style={styles.container} edges={["top"]}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={24} color="#0a0a0a" />
+            <Ionicons name="arrow-back" size={24} color="#111827" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Order Details</Text>
           <View style={{ width: 24 }} />
         </View>
 
         <View style={styles.errorContainer}>
-          <Ionicons name="alert-circle-outline" size={64} color="#303030" />
+          <Ionicons name="alert-circle-outline" size={64} color="#111827" />
           <Text style={styles.errorText}>Order not found</Text>
           <Button
             title="Go to Orders"
@@ -100,7 +100,7 @@ export default function OrderDetailScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#0a0a0a" />
+          <Ionicons name="arrow-back" size={24} color="#111827" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Order Details</Text>
         <View style={{ width: 24 }} />
@@ -159,7 +159,7 @@ export default function OrderDetailScreen() {
         {order.trackingNumber && (
           <Card style={styles.trackingCard}>
             <View style={styles.cardHeader}>
-              <Ionicons name="cube" size={20} color="#0f0f0f" />
+              <Ionicons name="cube" size={20} color="#111827" />
               <Text style={styles.cardTitle}>Tracking Information</Text>
             </View>
             <View style={styles.trackingInfo}>
@@ -172,7 +172,7 @@ export default function OrderDetailScreen() {
                 onPress={() => Linking.openURL(order.trackingUrl!)}
               >
                 <Text style={styles.trackingButtonText}>Track Package</Text>
-                <Ionicons name="open-outline" size={16} color="#0f0f0f" />
+                <Ionicons name="open-outline" size={16} color="#111827" />
               </TouchableOpacity>
             )}
           </Card>
@@ -181,7 +181,7 @@ export default function OrderDetailScreen() {
         {/* Shipping Address */}
         <Card style={styles.addressCard}>
           <View style={styles.cardHeader}>
-            <Ionicons name="location" size={20} color="#0f0f0f" />
+            <Ionicons name="location" size={20} color="#111827" />
             <Text style={styles.cardTitle}>Shipping Address</Text>
           </View>
           <Text style={styles.addressName}>{order.shippingAddress.fullName}</Text>
@@ -209,7 +209,7 @@ export default function OrderDetailScreen() {
         {/* Order Items */}
         <Card style={styles.itemsCard}>
           <View style={styles.cardHeader}>
-            <Ionicons name="cart" size={20} color="#0f0f0f" />
+            <Ionicons name="cart" size={20} color="#111827" />
             <Text style={styles.cardTitle}>Order Items</Text>
           </View>
 
@@ -271,7 +271,7 @@ export default function OrderDetailScreen() {
         {order.transactionHash && (
           <Card style={styles.transactionCard}>
             <View style={styles.cardHeader}>
-              <Ionicons name="swap-horizontal" size={20} color="#0f0f0f" />
+          <Ionicons name="swap-horizontal" size={20} color="#111827" />
               <Text style={styles.cardTitle}>Payment Transaction</Text>
             </View>
             <Text style={styles.transactionLabel}>Transaction Hash</Text>
@@ -293,21 +293,21 @@ export default function OrderDetailScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f7f7f7",
+    backgroundColor: "#FFFFFF", // White
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     padding: 16,
-    backgroundColor: "#ffffff",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e3e3e3",
+    backgroundColor: "#FFFFFF",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#E5E7EB",
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#0a0a0a",
+    color: "#111827", // Charcoal
   },
   loadingContainer: {
     flex: 1,
@@ -323,11 +323,12 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#111827",
     marginTop: 16,
   },
   errorButton: {
     marginTop: 24,
+    backgroundColor: "#111827",
   },
   content: {
     flex: 1,
@@ -339,6 +340,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 32,
     marginBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
   statusHeader: {
     marginBottom: 16,
@@ -353,17 +362,28 @@ const styles = StyleSheet.create({
   statusTitle: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#0a0a0a",
+    color: "#111827",
     marginBottom: 8,
     textTransform: "capitalize",
+    fontFamily: 'PlayfairDisplay-Bold',
   },
   statusSubtitle: {
     fontSize: 14,
-    color: "#6a6a6a",
+    color: "#6B7280", // Gray
     textAlign: "center",
+    fontFamily: 'Inter-Regular',
   },
   infoCard: {
     marginBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
+    padding: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
   infoRow: {
     flexDirection: "row",
@@ -373,28 +393,37 @@ const styles = StyleSheet.create({
   },
   infoLabel: {
     fontSize: 14,
-    color: "#6a6a6a",
+    color: "#6B7280",
   },
   infoValue: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#111827",
   },
   totalAmount: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#0f0f0f",
+    color: "#111827",
   },
   totalCurrency: {
     fontSize: 12,
-    color: "#6a6a6a",
+    color: "#6B7280",
   },
   divider: {
     height: 1,
-    backgroundColor: "#e3e3e3",
+    backgroundColor: "#F3F4F6",
   },
   trackingCard: {
     marginBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
+    padding: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
   cardHeader: {
     flexDirection: "row",
@@ -405,20 +434,20 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#111827",
   },
   trackingInfo: {
     marginBottom: 12,
   },
   trackingLabel: {
     fontSize: 12,
-    color: "#6a6a6a",
+    color: "#6B7280",
     marginBottom: 4,
   },
   trackingNumber: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#111827",
     fontFamily: "monospace",
   },
   trackingButton: {
@@ -426,36 +455,54 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 8,
-    backgroundColor: "#f6f6f6",
+    backgroundColor: "#F3F4F6",
     padding: 12,
     borderRadius: 8,
   },
   trackingButtonText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#0f0f0f",
+    color: "#111827",
   },
   addressCard: {
     marginBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
+    padding: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
   addressName: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#111827",
     marginBottom: 8,
   },
   addressText: {
     fontSize: 14,
-    color: "#6a6a6a",
+    color: "#6B7280",
     marginBottom: 4,
   },
   addressPhone: {
     fontSize: 14,
-    color: "#0f0f0f",
+    color: "#111827",
     marginTop: 4,
   },
   itemsCard: {
     marginBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
+    padding: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
   orderItem: {
     flexDirection: "row",
@@ -465,7 +512,7 @@ const styles = StyleSheet.create({
   },
   orderItemBorder: {
     borderBottomWidth: 1,
-    borderBottomColor: "#e3e3e3",
+    borderBottomColor: "#F3F4F6",
   },
   itemDetails: {
     flex: 1,
@@ -474,23 +521,23 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#111827",
     marginBottom: 4,
   },
   itemQuantity: {
     fontSize: 12,
-    color: "#6a6a6a",
+    color: "#6B7280",
   },
   itemPrice: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#111827",
   },
   summarySection: {
     marginTop: 16,
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: "#e3e3e3",
+    borderTopColor: "#F3F4F6",
   },
   summaryRow: {
     flexDirection: "row",
@@ -499,12 +546,12 @@ const styles = StyleSheet.create({
   },
   summaryLabel: {
     fontSize: 14,
-    color: "#6a6a6a",
+    color: "#6B7280",
   },
   summaryValue: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#0a0a0a",
+    color: "#111827",
   },
   totalRow: {
     flexDirection: "row",
@@ -512,35 +559,44 @@ const styles = StyleSheet.create({
     marginTop: 8,
     paddingTop: 12,
     borderTopWidth: 1,
-    borderTopColor: "#e3e3e3",
+    borderTopColor: "#F3F4F6",
   },
   totalLabel: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#0a0a0a",
+    color: "#111827",
   },
   totalValue: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#0f0f0f",
+    color: "#111827", // Charcoal
   },
   transactionCard: {
     marginBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#F3F4F6",
+    padding: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
   transactionLabel: {
     fontSize: 12,
-    color: "#6a6a6a",
+    color: "#6B7280",
     marginBottom: 4,
   },
   transactionHash: {
     fontSize: 12,
     fontWeight: "500",
-    color: "#0a0a0a",
+    color: "#111827",
     fontFamily: "monospace",
     marginBottom: 8,
   },
   transactionNetwork: {
     fontSize: 12,
-    color: "#6a6a6a",
+    color: "#6B7280",
   },
 });
