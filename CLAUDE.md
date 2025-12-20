@@ -115,6 +115,13 @@ Navigation between screens uses `router.push()`, `router.replace()`, or `<Link>`
    - User points balance, transaction history, redemption options
    - Actions: `fetchRewards()`, `redeemPoints()`, `fetchTransactions()`
 
+6. **testnet-store.ts**: Global testnet mode state
+   - Controls whether app uses testnet or mainnet networks
+   - Persisted to AsyncStorage
+   - Actions: `setTestnetMode()`, `toggleTestnetMode()`
+   - Used throughout app for dynamic network/contract configuration
+   - See [Testnet Mode](#testnet-mode) section below for details
+
 **Important**: Stores are used throughout the app. Always import from `@/store/` and use the hook pattern:
 ```typescript
 import { useAuthStore } from '@/store/auth-store';
@@ -510,6 +517,109 @@ Requires EAS account and configuration in `app.json` under `extra.eas.projectId`
 **Build errors**: Delete `node_modules`, `.expo`, and reinstall with `npm install`
 
 **Styling issues**: Ensure NativeWind Babel preset is before reanimated plugin
+
+## Testnet Mode
+
+The mobile app includes a global testnet mode feature that allows switching between mainnet and testnet networks at runtime. This is useful for development, testing, and demonstrations without risking real funds.
+
+### Overview
+
+- **Testnet Store**: Located at `store/testnet-store.ts`
+- **Network Config**: Located at `lib/network-config.ts`
+- **Testnet Banner**: Visual indicator at `components/layout/TestnetBanner.tsx`
+- **Persistence**: State saved to AsyncStorage and persists across app restarts
+
+### Usage
+
+**Accessing Testnet Mode**:
+```typescript
+import { useTestnetStore } from '@/store/testnet-store';
+
+function MyComponent() {
+  const { isTestnetMode, setTestnetMode, toggleTestnetMode } = useTestnetStore();
+
+  return (
+    <View>
+      <Text>Current Mode: {isTestnetMode ? 'Testnet' : 'Mainnet'}</Text>
+      <Button title="Toggle Mode" onPress={toggleTestnetMode} />
+    </View>
+  );
+}
+```
+
+**Using Dynamic Network Configuration**:
+```typescript
+import { useTestnetStore } from '@/store/testnet-store';
+import { getRpcUrl, getContractAddress, getNetworkDisplayName } from '@/lib/network-config';
+
+function WalletScreen() {
+  const { isTestnetMode } = useTestnetStore();
+
+  // Get dynamic RPC URL
+  const polygonRpc = getRpcUrl('POLYGON', isTestnetMode);
+  // Mainnet: "https://polygon-mainnet.g.alchemy.com/..."
+  // Testnet: "https://polygon-amoy.g.alchemy.com/..."
+
+  // Get dynamic contract address
+  const contractAddress = getContractAddress('POLYGON', isTestnetMode);
+  // Mainnet: "0x0000..." (not deployed)
+  // Testnet: "0xfFfD214731036E826A283d1600c967771fDdABAe"
+
+  // Get display name
+  const networkName = getNetworkDisplayName('POLYGON', isTestnetMode);
+  // Mainnet: "Polygon"
+  // Testnet: "Polygon Amoy"
+
+  return <Text>Connected to {networkName}</Text>;
+}
+```
+
+### Visual Indicator
+
+When testnet mode is enabled, a blue banner appears at the top of the app:
+- 20px height (equivalent to web's 5px in Tailwind)
+- Blue gradient background (#2563eb to #3b82f6)
+- Flask icon with text: "APPLICATION IS IN TEST MODE - USING TESTNET NETWORKS"
+- Fixed position at top with z-index 9999
+
+### Network Mappings
+
+| Network | Mainnet | Testnet |
+|---------|---------|---------|
+| Ethereum | Ethereum Mainnet | Ethereum Sepolia |
+| Polygon | Polygon | Polygon Amoy |
+| BSC | BNB Chain | BSC Testnet |
+| Arbitrum | Arbitrum One | Arbitrum Sepolia |
+| Optimism | Optimism | Optimism Sepolia |
+| Avalanche | Avalanche C-Chain | Avalanche Fuji |
+| Base | Base | Base Sepolia |
+| Sui | Sui Mainnet | Sui Testnet |
+| TON | TON Mainnet | TON Testnet |
+| Solana | Solana Mainnet | Solana Devnet |
+
+### Testnet Contracts
+
+Deployed testnet contracts (all EVM networks use the same address):
+- **EVM Networks**: `0xfFfD214731036E826A283d1600c967771fDdABAe`
+- **Sui Testnet**: `0xd3c5601b3110dad07821c27050dfc873a04f48e172463fba7cca5a5aa2b489cd`
+- **TON Testnet**: `kQC4Gn_21IQVPj3ey44TKG3PA1ciL-XjeMmYbcO7jnAmKard`
+- **Solana Devnet**: `Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS`
+
+### Best Practices
+
+1. **Always use testnet mode during development** to avoid spending real crypto
+2. **Get free testnet tokens** from faucets (see backend API_TESTING_GUIDE.md)
+3. **Use dynamic configuration functions** instead of hardcoded URLs
+4. **Check if contracts are deployed** using `isNetworkDeployed()` before transactions
+5. **Add testnet mode toggle** to app settings/profile screen for easy access
+
+### Important Notes
+
+- Testnet mode is **independent** between web and mobile apps
+- State is persisted to AsyncStorage and survives app restarts
+- When testnet mode is enabled, **all** blockchain interactions use testnet networks
+- Super admin can toggle global testnet mode on web (affects web only, not mobile)
+- To sync testnet mode between platforms, implement backend API or shared state service
 
 ### Code Conventions
 

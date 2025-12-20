@@ -12,6 +12,7 @@ interface InputProps extends TextInputProps {
   label?: string;
   error?: string;
   containerStyle?: ViewStyle;
+  contentContainerStyle?: ViewStyle;
   inputStyle?: TextStyle;
   labelStyle?: TextStyle;
   leftIcon?: React.ReactNode;
@@ -22,6 +23,7 @@ export const Input: React.FC<InputProps> = ({
   label,
   error,
   containerStyle,
+  contentContainerStyle,
   inputStyle,
   labelStyle,
   leftIcon,
@@ -47,15 +49,18 @@ export const Input: React.FC<InputProps> = ({
         </Text>
       )}
       <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          borderWidth: 1,
-          borderColor: error ? "#ef4444" : "#E5E7EB", // Light Gray
-          borderRadius: 12,
-          backgroundColor: "#FFFFFF", // White
-          paddingHorizontal: 12,
-        }}
+        style={[
+          {
+            flexDirection: "row",
+            alignItems: "center",
+            borderWidth: 1,
+            borderColor: error ? "#ef4444" : "#E5E7EB", // Light Gray
+            borderRadius: 12,
+            backgroundColor: "#FFFFFF", // White
+            paddingHorizontal: 12,
+          },
+          contentContainerStyle,
+        ]}
       >
         {leftIcon && <View style={{ marginRight: 8 }}>{leftIcon}</View>}
         <TextInput

@@ -3,15 +3,15 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import {
-    Alert,
-    Image,
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import api from "../../api";
 import { Button } from "../../components/ui/Button";
@@ -202,7 +202,7 @@ export default function LoginScreen() {
         <View style={styles.header}>
           <Image
             source={{
-              uri: "https://ik.imagekit.io/bgvtzewqf/0xmart/OXMART-3.png",
+              uri: "https://ik.imagekit.io/bgvtzewqf/0xmart/0XMART-BLACK-FONT-REMOVEBG-long.png",
             }}
             style={styles.headerLogo}
             resizeMode="contain"
@@ -212,10 +212,10 @@ export default function LoginScreen() {
         <View style={styles.formContainer}>
           {step === "phone" ? (
             <>
-              <View style={styles.heroTextContainer}>
+              {/* <View style={styles.heroTextContainer}>
                 <Text style={styles.welcomeText}>Welcome back</Text>
-                <Text style={styles.heroSubText}>Please enter your details to sign in.</Text>
-              </View>
+                <Text style={styles.heroSubText}>Enter your details to sign in.</Text>
+              </View> */}
 
               <View style={styles.inputGroup}>
                 <Input
@@ -225,55 +225,52 @@ export default function LoginScreen() {
                     setEmail(text);
                     setErrors({ ...errors, email: "" });
                   }}
-                  placeholder="your@email.com"
+                  placeholder="name@example.com"
                   keyboardType="email-address"
                   autoCapitalize="none"
                   error={errors.email}
-                  leftIcon={<Ionicons name="mail-outline" size={20} color="#6B7280" />}
+                  leftIcon={<Ionicons name="mail-outline" size={20} color="#9CA3AF" />}
                   containerStyle={styles.inputContainer}
-                  inputStyle={styles.inputField}
                 />
 
-                <View style={styles.phoneLabelContainer}>
+                <View style={styles.phoneSection}>
                   <Text style={styles.inputLabel}>Phone Number</Text>
+                  <View style={[styles.phoneInputCombined, errors.phone ? styles.errorBorder : null]}>
+                      <CountryCodePicker
+                        value={countryCode}
+                        onSelect={setCountryCode}
+                        containerStyle={styles.countryPicker}
+                      />
+                      <View style={styles.verticalDivider} />
+                      <Input
+                        value={phoneNumber}
+                        onChangeText={(text) => {
+                          setPhoneNumber(text);
+                          setErrors({ ...errors, phone: "" });
+                        }}
+                        placeholder="Mobile number"
+                        keyboardType="phone-pad"
+                        containerStyle={styles.phoneInputWrapper}
+                        contentContainerStyle={styles.phoneInputContent}
+                      />
+                  </View>
+                   {errors.phone ? <Text style={styles.errorText}>{errors.phone}</Text> : null}
                 </View>
-                <View style={[styles.phoneContainer, errors.phone ? styles.phoneError : null]}>
-                  <CountryCodePicker
-                    value={countryCode}
-                    onSelect={setCountryCode}
-                    containerStyle={styles.countryCodeInput}
-                  />
-                  <Input
-                    value={phoneNumber}
-                    onChangeText={(text) => {
-                      setPhoneNumber(text);
-                      setErrors({ ...errors, phone: "" });
-                    }}
-                    placeholder="1234567890"
-                    keyboardType="phone-pad"
-                    containerStyle={styles.phoneInputContainer}
-                    inputStyle={styles.inputField}
-                    // error={errors.phone} // Handled by container border
-                    leftIcon={<Ionicons name="call-outline" size={20} color="#6B7280" />}
-                  />
-                </View>
-                {errors.phone ? <Text style={styles.errorText}>{errors.phone}</Text> : null}
 
                 <Input
                   label="Referral Code (Optional)"
                   value={referralCode}
                   onChangeText={(text) => setReferralCode(text.toUpperCase())}
-                  placeholder="Have a referral code?"
+                  placeholder="Referral Code"
                   autoCapitalize="characters"
-                  leftIcon={<Ionicons name="gift-outline" size={20} color="#6B7280" />}
+                  leftIcon={<Ionicons name="gift-outline" size={20} color="#9CA3AF" />}
                   containerStyle={styles.inputContainer}
-                  inputStyle={styles.inputField}
                 />
               </View>
 
               <View style={styles.actionButtons}>
                 <Button
-                  title="Send OTP"
+                  title="Continue"
                   onPress={handleSendOTP}
                   loading={loading}
                   fullWidth
@@ -281,9 +278,9 @@ export default function LoginScreen() {
                   textStyle={styles.primaryButtonText}
                 />
 
-                <TouchableOpacity onPress={handleSkip} style={styles.skipButtonContainer}>
+                {/* <TouchableOpacity onPress={handleSkip} style={styles.skipButtonContainer}>
                   <Text style={styles.skipButtonText}>Skip & Browse</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
             </>
           ) : (
@@ -291,7 +288,7 @@ export default function LoginScreen() {
               <View style={styles.heroTextContainer}>
                 <Text style={styles.welcomeText}>Verify OTP</Text>
                 <Text style={styles.heroSubText}>
-                  We sent 6-digit codes to your email and phone.
+                  Enter the verification codes sent to your email and phone.
                 </Text>
               </View>
 
@@ -307,9 +304,8 @@ export default function LoginScreen() {
                   keyboardType="number-pad"
                   maxLength={6}
                   error={errors.emailOtp}
-                  leftIcon={<Ionicons name="mail-open-outline" size={20} color="#6B7280" />}
+                  leftIcon={<Ionicons name="mail-open-outline" size={20} color="#9CA3AF" />}
                   containerStyle={styles.inputContainer}
-                  inputStyle={styles.inputField}
                 />
 
                 <Input
@@ -323,9 +319,8 @@ export default function LoginScreen() {
                   keyboardType="number-pad"
                   maxLength={6}
                   error={errors.phoneOtp}
-                  leftIcon={<Ionicons name="phone-portrait-outline" size={20} color="#6B7280" />}
+                  leftIcon={<Ionicons name="phone-portrait-outline" size={20} color="#9CA3AF" />}
                   containerStyle={styles.inputContainer}
-                  inputStyle={styles.inputField}
                 />
               </View>
 
@@ -355,7 +350,7 @@ export default function LoginScreen() {
 
         <View style={styles.footer}>
           <Text style={styles.disclaimer}>
-            By continuing, you agree to our Terms of Service and Privacy Policy
+            By continuing, you agree to 0xMart's Terms and Privacy Policy.
           </Text>
         </View>
       </ScrollView>
@@ -366,7 +361,7 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9FAFB", // Very light gray for background
+    backgroundColor: "#FFFFFF",
   },
   scrollContent: {
     flexGrow: 1,
@@ -375,20 +370,14 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   header: {
-    alignItems: "center",
-    marginBottom: 48,
+    alignItems: "flex-start", // Left align logo
+    marginBottom: 40,
   },
   headerLogo: {
-    width: 200,
-    height: 70,
-    tintColor: "#111827",
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#6B7280", // Gray-500
-    marginTop: 4,
-    fontFamily: 'Inter-Regular',
-    letterSpacing: 0.5,
+    width: 140, // Smaller, neater logo
+    height: 50,
+    resizeMode: "contain",
+    alignSelf: "center",
   },
   formContainer: {
     flex: 1,
@@ -401,7 +390,8 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#111827",
     marginBottom: 8,
-    fontFamily: 'PlayfairDisplay-Bold',
+    fontFamily: 'PlayfairDisplay-Bold', // Keep serif for elegance
+    letterSpacing: -0.5,
   },
   heroSubText: {
     fontSize: 16,
@@ -414,60 +404,65 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginBottom: 20,
-    backgroundColor: 'transparent',
   },
-  inputField: {
-    fontSize: 16,
-  },
-  phoneLabelContainer: {
-    marginBottom: 8,
+  phoneSection: {
+      marginBottom: 20,
   },
   inputLabel: {
     fontSize: 14,
     fontWeight: "500",
     color: "#111827",
-    fontFamily: 'Inter-Medium',
+    marginBottom: 8,
+    fontFamily: "Inter-Medium",
   },
-  phoneContainer: {
-    flexDirection: "row",
-    gap: 12,
-    marginBottom: 20,
-    alignItems: 'flex-start',
+  phoneInputCombined: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: '#E5E7EB',
+      borderRadius: 12,
+      height: 52, // Standard height
+      overflow: 'hidden', // Ensure children don't bleed out
   },
-  phoneError: {
-    // marginBottom: 0, 
+  errorBorder: {
+      borderColor: '#ef4444',
   },
-  countryCodeInput: {
-    flex: 0.35,
-    marginBottom: 0,
+  countryPicker: {
+      // Remove default margins/borders if any from the component itself
+      borderWidth: 0,
+      marginBottom: 0,
+      backgroundColor: 'transparent',
+      width: 100, // Fixed width for country code
   },
-  phoneInputContainer: {
-    flex: 0.65,
-    marginBottom: 0,
-    backgroundColor: 'transparent',
+  verticalDivider: {
+      width: 1,
+      height: '60%',
+      backgroundColor: '#E5E7EB',
+  },
+  phoneInputWrapper: {
+      flex: 1,
+      marginBottom: 0, // Reset default Input margin
+  },
+  phoneInputContent: {
+      borderWidth: 0, // Remove Input's internal border
+      backgroundColor: 'transparent',
+      height: '100%',
+      paddingHorizontal: 12,
   },
   errorText: {
     fontSize: 12,
     color: "#ef4444",
-    marginTop: -16,
-    marginBottom: 20,
-    marginLeft: 4,
+    marginTop: 4,
   },
   actionButtons: {
     gap: 16,
   },
   primaryButton: {
     backgroundColor: "#111827",
-    height: 56,
-    borderRadius: 16,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 12,
-    elevation: 4,
+    height: 52,
+    borderRadius: 12, // Slightly tighter radius
+    shadowColor: "transparent", // Remove shadow for cleaner look or keep minimal
+    elevation: 0,
   },
   primaryButtonText: {
     fontSize: 16,
@@ -480,7 +475,7 @@ const styles = StyleSheet.create({
   },
   skipButtonText: {
     color: "#6B7280",
-    fontSize: 16,
+    fontSize: 15,
     fontFamily: 'Inter-Medium',
     fontWeight: "500",
   },

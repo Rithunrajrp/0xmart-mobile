@@ -1,4 +1,5 @@
 import { AnimatedSplashScreen } from '@/components/ui/AnimatedSplashScreen';
+import { TestnetBanner } from '@/components/layout/TestnetBanner';
 import { useAuthStore } from '@/store/auth-store';
 import {
     Inter_400Regular,
@@ -103,6 +104,7 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <View style={{ flex: 1 }}>
+        <TestnetBanner />
         {isInitialized && (
           <Stack screenOptions={{ headerShown: false }}>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -119,10 +121,10 @@ export default function RootLayout() {
             <Stack.Screen name="rewards" options={{ headerShown: false }} />
           </Stack>
         )}
-        
+
         {!isSplashAnimationFinished && (
-          <AnimatedSplashScreen 
-            onFinish={() => setIsSplashAnimationFinished(true)} 
+          <AnimatedSplashScreen
+            onFinish={() => setIsSplashAnimationFinished(true)}
           />
         )}
       </View>
