@@ -35,10 +35,10 @@ export const NETWORK_CONFIG: Record<NetworkType, NetworkInfo> = {
   },
   BSC: {
     name: "BNB Smart Chain",
-    layer: "L1",
+    layer: "L2", // Reclassified as L2 for mobile wallet creation (low gas fees)
     isEVM: true,
     supportedStablecoins: ["USDT", "USDC", "DAI", "BUSD"],
-    description: "Binance's blockchain (separate L1)",
+    description: "Binance's blockchain with low gas fees",
   },
   ARBITRUM: {
     name: "Arbitrum",
