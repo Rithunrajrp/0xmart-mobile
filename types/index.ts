@@ -358,3 +358,39 @@ export interface GeocodedAddress {
   postalCode?: string;
   formattedAddress?: string;
 }
+
+// ============================================================================
+// Rewards
+// ============================================================================
+
+export type RewardType = "PURCHASE" | "REFERRAL" | "FIRST_PURCHASE" | "SUBSCRIPTION";
+
+export interface Reward {
+  id: string;
+  userId: string;
+  type: RewardType;
+  amount?: string;
+  currency?: StablecoinType;
+  points: number;
+  status: string; // EARNED, CLAIMED, EXPIRED
+  description?: string;
+  referenceType?: string;
+  referenceId?: string;
+  metadata?: any;
+  createdAt: string;
+  updatedAt: string;
+  claimedAt?: string;
+  expiresAt?: string;
+}
+
+export interface RewardsResponse {
+  rewards: Reward[];
+  totalPoints: number;
+}
+
+export interface RewardStatistics {
+  totalRewards: number;
+  earnedRewards: number;
+  claimedRewards: number;
+  totalPoints: number;
+}

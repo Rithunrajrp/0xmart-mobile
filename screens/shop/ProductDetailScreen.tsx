@@ -19,6 +19,9 @@ import { useAuthStore } from "../../store/auth-store";
 import { useCartStore } from "../../store/cart-store";
 import { useFavoritesStore } from "../../store/favorites-store";
 import { Product } from "../../types";
+import ReviewList from "@/components/reviews/ReviewList";
+import ReviewForm from "@/components/reviews/ReviewForm";
+import ReviewSummary from "@/components/reviews/ReviewSummary";
 
 const { width } = Dimensions.get("window");
 
@@ -353,6 +356,65 @@ export default function ProductDetailScreen() {
           {/* Divider */}
           <View style={styles.divider} />
 
+          {/* Seller Information */}
+          {product.seller && (
+            <View style={styles.sellerSection}>
+              <Text style={styles.sectionTitle}>Sold by</Text>
+              <View style={styles.sellerCard}>
+                <View style={styles.sellerHeader}>
+                  {product.seller.isInhouse ? (
+                    <Image
+                      source={{ uri: "https://ik.imagekit.io/bgvtzewqf/0xmart/0XMART-BLACK-FONT-REMOVEBG.png" }}
+                      style={styles.sellerLogo}
+                      resizeMode="contain"
+                    />
+                  ) : product.seller.logo ? (
+                    <Image
+                      source={{ uri: product.seller.logo }}
+                      style={styles.sellerLogo}
+                      resizeMode="contain"
+                    />
+                  ) : (
+                    <View style={styles.sellerLogoPlaceholder}>
+                      <Ionicons name="storefront-outline" size={24} color="#6B7280" />
+                    </View>
+                  )}
+                  <View style={styles.sellerInfo}>
+                    <View style={styles.sellerNameRow}>
+                      <Text style={styles.sellerName} numberOfLines={1}>
+                        {product.seller.isInhouse
+                          ? "0xMart"
+                          : (product.seller.tradingName || product.seller.name)}
+                      </Text>
+                      {(product.seller.isInhouse || product.seller.isVerified) && (
+                        <Ionicons name="checkmark-circle" size={16} color="#3B82F6" />
+                      )}
+                    </View>
+                    {(product.seller.isInhouse || product.seller.rating) && (
+                      <View style={styles.sellerRating}>
+                        <Ionicons name="star" size={14} color="#ffa41c" />
+                        <Text style={styles.sellerRatingText}>
+                          {product.seller.isInhouse
+                            ? "5.0 • Official 0xMart Product"
+                            : `${product.seller.rating} • Official Seller`}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                </View>
+                {!product.seller.isInhouse && (
+                  <TouchableOpacity
+                    style={styles.visitStoreButton}
+                    onPress={() => router.push(`/seller/${product.seller?.id}`)}
+                  >
+                    <Text style={styles.visitStoreButtonText}>Visit Store</Text>
+                    <Ionicons name="chevron-forward" size={16} color="#8b5cf6" />
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+          )}
+
           {/* Description */}
           {product.description && (
             <View style={styles.section}>
@@ -403,6 +465,36 @@ export default function ProductDetailScreen() {
               )}
             </View>
           </View>
+        </View>
+
+        {/* Reviews Section */}
+        <View className="px-4 mt-8">
+          <Text className="text-2xl font-bold text-text-primary mb-4">
+            Customer Reviews
+          </Text>
+
+          {product.rating !== undefined && product.totalReviews !== undefined && (
+            <View className="mb-6">
+              <ReviewSummary
+                averageRating={product.rating}
+                totalReviews={product.totalReviews}
+              />
+            </View>
+          )}
+
+          {isAuthenticated && (
+            <View className="mb-6">
+              <ReviewForm
+                productId={id as string}
+                onSuccess={() => {
+                  // Refresh the product data
+                  fetchProduct();
+                }}
+              />
+            </View>
+          )}
+
+          <ReviewList productId={id as string} />
         </View>
 
         {/* Bottom spacing */}
@@ -732,5 +824,76 @@ const styles = StyleSheet.create({
     backgroundColor: "#111827", // Charcoal
     borderRadius: 8,
     paddingVertical: 16,
+  },
+  sellerSection: {
+    marginBottom: 24,
+  },
+  sellerCard: {
+    backgroundColor: "#F9FAFB",
+    borderRadius: 12,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+  },
+  sellerHeader: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 12,
+    marginBottom: 12,
+  },
+  sellerLogo: {
+    width: 48,
+    height: 48,
+    borderRadius: 8,
+    backgroundColor: "#F3F4F6",
+  },
+  sellerLogoPlaceholder: {
+    width: 48,
+    height: 48,
+    borderRadius: 8,
+    backgroundColor: "#F3F4F6",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  sellerInfo: {
+    flex: 1,
+  },
+  sellerNameRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 4,
+  },
+  sellerName: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#111827",
+    flex: 1,
+  },
+  sellerRating: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  sellerRatingText: {
+    fontSize: 12,
+    color: "#6B7280",
+  },
+  visitStoreButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 4,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#8b5cf6",
+    backgroundColor: "#FFFFFF",
+  },
+  visitStoreButtonText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#8b5cf6",
   },
 });

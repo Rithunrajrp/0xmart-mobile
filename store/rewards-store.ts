@@ -45,73 +45,104 @@ export const useRewardsStore = create<RewardsStore>((set, get) => ({
     try {
       set({ loading: true, error: null });
 
-      // TODO: Replace with actual API call
-      // const response = await api.get('/rewards/me');
+      // Fetch user data, rewards, and statistics from backend
+      const [userProfile, userStats, rewardsResponse, rewardStats] = await Promise.all([
+        api.getUserProfile(), // This has totalSpent, totalReferrals, referralCode, subscriptionTier
+        api.getUserStats(),   // This has balance, wallets, etc
+        api.getMyRewards(),
+        api.getRewardStatistics(),
+      ]);
 
-      // Mock data for demo
-      const mockRewards: UserRewards = {
-        currentTier: MembershipTier.MASTER_NODE,
-        totalSpent: 2500,
-        currentPoints: 3750,
-        tokenCredits: 12500,
+      // Calculate total spent from user profile
+      const totalSpent = parseFloat(userProfile.totalSpent?.toString() || '0');
+
+      // Determine tier based on total spend
+      const currentTier = getTierFromSpend(totalSpent);
+
+      // Calculate purchase rewards from backend data
+      const purchaseRewards = rewardsResponse.rewards.filter((r: any) =>
+        r.type === 'PURCHASE' || r.type === 'FIRST_PURCHASE'
+      );
+      const purchasePointsEarned = purchaseRewards.reduce((sum: number, r: any) => sum + r.points, 0);
+
+      // Calculate referral rewards
+      const referralRewards = rewardsResponse.rewards.filter((r: any) => r.type === 'REFERRAL');
+      const referralPointsEarned = referralRewards.reduce((sum: number, r: any) => sum + r.points, 0);
+
+      // Transform backend data to mobile app structure
+      const transformedRewards: UserRewards = {
+        currentTier,
+        totalSpent,
+        currentPoints: rewardsResponse.totalPoints || 0,
+        tokenCredits: rewardStats.totalPoints || 0,
         purchaseRewards: {
-          totalPurchases: 47,
-          pointsEarned: 3200,
-          currentMultiplier: 1.5,
+          totalPurchases: purchaseRewards.length,
+          pointsEarned: purchasePointsEarned,
+          currentMultiplier: TIER_CONFIGS[currentTier]?.pointMultiplier || 1.0,
           milestones: [
             {
               id: 'm1',
               title: 'First Purchase',
               description: 'Complete your first purchase',
               targetAmount: 1,
-              currentAmount: 47,
+              currentAmount: purchaseRewards.length,
               reward: '100 bonus points',
-              unlocked: true,
+              unlocked: purchaseRewards.length >= 1,
             },
             {
               id: 'm2',
               title: 'Shopping Spree',
               description: 'Make 50 purchases',
               targetAmount: 50,
-              currentAmount: 47,
+              currentAmount: purchaseRewards.length,
               reward: 'Mystery Box',
-              unlocked: false,
+              unlocked: purchaseRewards.length >= 50,
+            },
+            {
+              id: 'm3',
+              title: 'Shopping Champion',
+              description: 'Make 100 purchases',
+              targetAmount: 100,
+              currentAmount: purchaseRewards.length,
+              reward: 'Exclusive Drop Access',
+              unlocked: purchaseRewards.length >= 100,
             },
           ],
         },
         referralRewards: {
-          totalReferrals: 8,
-          successfulReferrals: 5,
-          pointsEarned: 550,
-          currentStreak: 3,
-          referralCode: 'OXMART-2K9X',
-          leaderboardRank: 42,
+          totalReferrals: userProfile.totalReferrals || 0,
+          successfulReferrals: Math.floor((userProfile.totalReferrals || 0) * 0.6), // Approximate successful referrals
+          pointsEarned: referralPointsEarned,
+          currentStreak: Math.min(userProfile.totalReferrals || 0, 5), // Max streak of 5
+          referralCode: userProfile.referralCode || 'OXMART-XXXX',
+          leaderboardRank: undefined,
           streakBonuses: [
             {
               level: 1,
               referralsNeeded: 3,
               bonusMultiplier: 1.2,
-              unlocked: true,
+              unlocked: (userProfile.totalReferrals || 0) >= 3,
             },
             {
               level: 2,
               referralsNeeded: 5,
               bonusMultiplier: 1.5,
-              unlocked: true,
+              unlocked: (userProfile.totalReferrals || 0) >= 5,
             },
             {
               level: 3,
               referralsNeeded: 10,
               bonusMultiplier: 2.0,
-              unlocked: false,
+              unlocked: (userProfile.totalReferrals || 0) >= 10,
             },
           ],
         },
         subscriptionRewards: {
-          isSubscribed: false,
-          bonusPoints: 0,
-          multiplier: 1.0,
-          tierProgressBoost: 0,
+          isSubscribed: userProfile.subscriptionTier !== 'free',
+          subscriptionTier: userProfile.subscriptionTier === 'free' ? undefined : userProfile.subscriptionTier?.toUpperCase() as 'BASIC' | 'PREMIUM' | 'ULTIMATE' | undefined,
+          bonusPoints: userProfile.subscriptionTier === 'free' ? 0 : 500,
+          multiplier: userProfile.subscriptionTier === 'free' ? 1.0 : 1.5,
+          tierProgressBoost: userProfile.subscriptionTier === 'free' ? 0 : 20,
         },
         mysteryBoxes: [
           {
@@ -119,8 +150,8 @@ export const useRewardsStore = create<RewardsStore>((set, get) => ({
             title: 'Starter Mystery Box',
             requiredTier: MembershipTier.NODE_RUNNER,
             requiredPoints: 500,
-            unlocked: true,
-            opened: true,
+            unlocked: tierMeetsRequirement(currentTier, MembershipTier.NODE_RUNNER) && rewardsResponse.totalPoints >= 500,
+            opened: false,
             rarity: 'COMMON',
             potentialRewards: ['100-500 points', 'Discount codes', 'Free shipping voucher'],
           },
@@ -128,7 +159,8 @@ export const useRewardsStore = create<RewardsStore>((set, get) => ({
             id: 'box2',
             title: 'Master Node Box',
             requiredTier: MembershipTier.MASTER_NODE,
-            unlocked: true,
+            requiredPoints: 2000,
+            unlocked: tierMeetsRequirement(currentTier, MembershipTier.MASTER_NODE) && rewardsResponse.totalPoints >= 2000,
             opened: false,
             rarity: 'RARE',
             potentialRewards: ['500-1500 points', 'Exclusive products', 'Tier boost'],
@@ -137,30 +169,31 @@ export const useRewardsStore = create<RewardsStore>((set, get) => ({
             id: 'box3',
             title: 'Whale Treasure',
             requiredTier: MembershipTier.WHALE,
-            unlocked: false,
+            requiredPoints: 5000,
+            unlocked: tierMeetsRequirement(currentTier, MembershipTier.WHALE) && rewardsResponse.totalPoints >= 5000,
             opened: false,
             rarity: 'EPIC',
             potentialRewards: ['2000-5000 points', 'Limited drops', 'Token bonus'],
           },
-        ],
-        exclusiveDrops: [
           {
-            id: 'drop1',
-            productId: 'prod123',
-            name: 'Limited Edition Smart Watch',
-            imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30',
-            requiredTier: MembershipTier.WHALE,
-            availableQuantity: 15,
-            totalQuantity: 50,
-            launchDate: new Date('2025-12-15'),
-            unlocked: false,
+            id: 'box4',
+            title: 'Supernova Vault',
+            requiredTier: MembershipTier.SUPERNOVA,
+            requiredPoints: 10000,
+            unlocked: tierMeetsRequirement(currentTier, MembershipTier.SUPERNOVA) && rewardsResponse.totalPoints >= 10000,
+            opened: false,
+            rarity: 'LEGENDARY',
+            potentialRewards: ['5000-15000 points', 'Rare collectibles', 'VIP access'],
           },
         ],
+        exclusiveDrops: [], // Exclusive drops would be populated from a separate backend endpoint
       };
 
-      set({ rewards: mockRewards, loading: false });
+      set({ rewards: transformedRewards, loading: false });
     } catch (error: any) {
-      set({ error: error.message, loading: false });
+      console.error('[Rewards Store] Error fetching rewards:', error);
+      console.error('[Rewards Store] Error details:', error.response?.data || error.message);
+      set({ error: error.response?.data?.message || error.message || 'Failed to fetch rewards', loading: false });
     }
   },
 

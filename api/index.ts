@@ -409,6 +409,91 @@ class ApiClient {
     const { data } = await this.client.get(`/deposit-monitor/status/${txHash}`);
     return data;
   }
+
+  // ============================================================================
+  // Rewards
+  // ============================================================================
+
+  async getMyRewards(status?: string) {
+    const { data } = await this.client.get("/rewards/my-rewards", {
+      params: status ? { status } : undefined,
+    });
+    return data;
+  }
+
+  async getRewardStatistics() {
+    const { data } = await this.client.get("/rewards/statistics");
+    return data;
+  }
+
+  async claimReward(rewardId: string) {
+    const { data } = await this.client.patch(`/rewards/${rewardId}/claim`);
+    return data;
+  }
+
+  // ============================================================================
+  // Sellers
+  // ============================================================================
+
+  async getSeller(id: string) {
+    const { data } = await this.client.get(`/sellers/${id}`);
+    return data;
+  }
+
+  async getSellerProducts(id: string, params?: { page?: number; limit?: number; category?: string }) {
+    const { data } = await this.client.get(`/sellers/${id}/products`, { params });
+    return data;
+  }
+
+  // ============================================================================
+  // Reviews
+  // ============================================================================
+
+  async createReview(reviewData: {
+    productId: string;
+    rating: number;
+    title?: string;
+    comment?: string;
+    images?: string[];
+  }) {
+    const { data } = await this.client.post("/reviews", reviewData);
+    return data;
+  }
+
+  async getProductReviews(productId: string, params?: { page?: number; limit?: number }) {
+    const { data } = await this.client.get(`/reviews/product/${productId}`, { params });
+    return data;
+  }
+
+  async getMyReviews(params?: { page?: number; limit?: number }) {
+    const { data } = await this.client.get("/reviews/my-reviews", { params });
+    return data;
+  }
+
+  async getReview(id: string) {
+    const { data } = await this.client.get(`/reviews/${id}`);
+    return data;
+  }
+
+  async updateReview(id: string, updateData: {
+    rating?: number;
+    title?: string;
+    comment?: string;
+    images?: string[];
+  }) {
+    const { data } = await this.client.patch(`/reviews/${id}`, updateData);
+    return data;
+  }
+
+  async deleteReview(id: string) {
+    const { data } = await this.client.delete(`/reviews/${id}`);
+    return data;
+  }
+
+  async markReviewHelpful(id: string) {
+    const { data } = await this.client.post(`/reviews/${id}/helpful`);
+    return data;
+  }
 }
 
 export const api = new ApiClient();

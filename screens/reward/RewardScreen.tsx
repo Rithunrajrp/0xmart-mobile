@@ -34,6 +34,7 @@ export default function RewardScreen() {
   const {
     rewards,
     loading,
+    error,
     fetchRewards,
     showUpgradeModal,
     upgradeEvent,
@@ -105,7 +106,7 @@ export default function RewardScreen() {
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
   };
 
-  if (loading || !rewards) {
+  if (loading) {
     return (
       <SafeAreaView style={styles.container} edges={["top"]}>
         <View style={styles.header}>
@@ -117,6 +118,46 @@ export default function RewardScreen() {
         </View>
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>Loading rewards...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (error) {
+    return (
+      <SafeAreaView style={styles.container} edges={["top"]}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => router.back()}>
+            <Ionicons name="arrow-back" size={24} color="#111827" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Rewards</Text>
+          <View style={{ width: 24 }} />
+        </View>
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>Error: {error}</Text>
+          <TouchableOpacity
+            onPress={() => fetchRewards()}
+            style={{ marginTop: 16, padding: 12, backgroundColor: '#8b5cf6', borderRadius: 8 }}
+          >
+            <Text style={{ color: 'white', fontWeight: '600' }}>Retry</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (!rewards) {
+    return (
+      <SafeAreaView style={styles.container} edges={["top"]}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => router.back()}>
+            <Ionicons name="arrow-back" size={24} color="#111827" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Rewards</Text>
+          <View style={{ width: 24 }} />
+        </View>
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>No rewards data available</Text>
         </View>
       </SafeAreaView>
     );
